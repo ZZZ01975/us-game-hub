@@ -1,0 +1,235 @@
+{
+  "name": "US Game Hub 网站监控配置",
+  "description": "用于配置各种监控服务的参数",
+  "version": "1.0.0",
+  
+  "uptime_monitoring": {
+    "description": "网站可用性监控配置",
+    "services": {
+      "uptimerobot": {
+        "name": "UptimeRobot",
+        "free_tier": true,
+        "monitors_limit": 50,
+        "check_interval": "5分钟",
+        "setup_url": "https://uptimerobot.com",
+        "monitors": [
+          {
+            "name": "US Game Hub 主页",
+            "url": "https://yourdomain.com",
+            "type": "HTTP(s)",
+            "keyword_monitoring": "US Game Hub",
+            "alert_contacts": ["email", "webhook"]
+          },
+          {
+            "name": "游戏数据API",
+            "url": "https://yourdomain.com/data/games.json",
+            "type": "HTTP(s)",
+            "expected_status": 200,
+            "alert_contacts": ["email"]
+          },
+          {
+            "name": "多语言文件",
+            "url": "https://yourdomain.com/languages/en.json",
+            "type": "HTTP(s)",
+            "expected_status": 200,
+            "alert_contacts": ["email"]
+          }
+        ]
+      },
+      
+      "pingdom": {
+        "name": "Pingdom",
+        "free_tier": true,
+        "monitors_limit": 1,
+        "check_interval": "1分钟",
+        "setup_url": "https://www.pingdom.com",
+        "features": ["性能监控", "真实用户监控", "页面速度分析"]
+      },
+      
+      "statuscake": {
+        "name": "StatusCake",
+        "free_tier": true,
+        "monitors_limit": 10,
+        "check_interval": "5分钟",
+        "setup_url": "https://www.statuscake.com",
+        "features": ["网站监控", "SSL证书监控", "域名监控"]
+      }
+    }
+  },
+  
+  "performance_monitoring": {
+    "description": "网站性能监控配置",
+    "tools": {
+      "google_pagespeed": {
+        "name": "Google PageSpeed Insights",
+        "url": "https://pagespeed.web.dev/",
+        "metrics": ["FCP", "LCP", "CLS", "FID", "TTI"],
+        "automated_checks": true
+      },
+      
+      "gtmetrix": {
+        "name": "GTmetrix",
+        "url": "https://gtmetrix.com",
+        "free_tier": true,
+        "features": ["性能评分", "瀑布图", "历史数据"]
+      },
+      
+      "webpagetest": {
+        "name": "WebPageTest",
+        "url": "https://www.webpagetest.org",
+        "features": ["多地点测试", "连接速度模拟", "详细分析"]
+      }
+    }
+  },
+  
+  "error_monitoring": {
+    "description": "错误监控和日志收集",
+    "services": {
+      "sentry": {
+        "name": "Sentry",
+        "free_tier": true,
+        "error_limit": "5000/月",
+        "setup_url": "https://sentry.io",
+        "features": ["JavaScript错误", "性能监控", "发布跟踪"],
+        "integration": {
+          "dsn": "YOUR_SENTRY_DSN",
+          "environment": "production",
+          "sample_rate": 1.0
+        }
+      },
+      
+      "logrocket": {
+        "name": "LogRocket",
+        "free_tier": true,
+        "session_limit": "1000/月",
+        "setup_url": "https://logrocket.com",
+        "features": ["会话重放", "错误监控", "性能监控"]
+      }
+    }
+  },
+  
+  "analytics": {
+    "description": "网站分析和用户行为监控",
+    "tools": {
+      "google_analytics": {
+        "name": "Google Analytics 4",
+        "tracking_id": "G-XXXXXXXXXX",
+        "features": ["用户行为", "转化跟踪", "实时数据"],
+        "events": [
+          "page_view",
+          "game_start",
+          "game_complete",
+          "search",
+          "language_change",
+          "error"
+        ]
+      },
+      
+      "hotjar": {
+        "name": "Hotjar",
+        "free_tier": true,
+        "session_limit": "35/天",
+        "setup_url": "https://www.hotjar.com",
+        "features": ["热力图", "会话录制", "用户反馈"]
+      },
+      
+      "microsoft_clarity": {
+        "name": "Microsoft Clarity",
+        "free_tier": true,
+        "unlimited": true,
+        "setup_url": "https://clarity.microsoft.com",
+        "features": ["热力图", "会话录制", "用户洞察"]
+      }
+    }
+  },
+  
+  "security_monitoring": {
+    "description": "安全监控和威胁检测",
+    "tools": {
+      "cloudflare_security": {
+        "name": "Cloudflare Security",
+        "features": ["DDoS防护", "WAF", "Bot管理"],
+        "free_tier": true
+      },
+      
+      "ssl_monitoring": {
+        "name": "SSL证书监控",
+        "tools": ["SSL Labs", "Qualys SSL Test"],
+        "check_frequency": "每周",
+        "alerts": ["证书过期", "配置问题"]
+      }
+    }
+  },
+  
+  "notification_channels": {
+    "description": "告警通知渠道配置",
+    "channels": {
+      "email": {
+        "enabled": true,
+        "addresses": ["admin@yourdomain.com"],
+        "severity_filter": ["high", "critical"]
+      },
+      
+      "webhook": {
+        "enabled": false,
+        "url": "https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK",
+        "format": "slack",
+        "severity_filter": ["critical"]
+      },
+      
+      "sms": {
+        "enabled": false,
+        "provider": "twilio",
+        "numbers": ["+1234567890"],
+        "severity_filter": ["critical"]
+      }
+    }
+  },
+  
+  "monitoring_schedule": {
+    "description": "监控检查计划",
+    "checks": {
+      "uptime": "每5分钟",
+      "performance": "每小时",
+      "ssl_certificate": "每天",
+      "security_scan": "每周",
+      "full_audit": "每月"
+    }
+  },
+  
+  "thresholds": {
+    "description": "告警阈值配置",
+    "response_time": {
+      "warning": "3秒",
+      "critical": "10秒"
+    },
+    "uptime": {
+      "warning": "99%",
+      "critical": "95%"
+    },
+    "error_rate": {
+      "warning": "1%",
+      "critical": "5%"
+    },
+    "page_size": {
+      "warning": "2MB",
+      "critical": "5MB"
+    }
+  },
+  
+  "reporting": {
+    "description": "监控报告配置",
+    "frequency": {
+      "daily_summary": true,
+      "weekly_report": true,
+      "monthly_analysis": true
+    },
+    "metrics": [
+      "平均响应时间",
+      "可用性百分比",
+      "错误数量",
+      "页面加载速度",
+      "用户访问量"
+    ]
+  }
+}

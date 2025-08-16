@@ -1,0 +1,29 @@
+# Netlify/Cloudflare 重定向配置文件
+# 用于设置URL重定向规则
+
+# 强制HTTPS重定向（如果CDN未自动处理）
+http://yourdomain.com/* https://yourdomain.com/:splat 301!
+http://www.yourdomain.com/* https://yourdomain.com/:splat 301!
+
+# www重定向到非www（可选，根据偏好调整）
+https://www.yourdomain.com/* https://yourdomain.com/:splat 301!
+
+# 旧版本兼容性重定向
+/game/:id /game.html?id=:id 301
+/category/:category /index.html#:category 301
+
+# 语言重定向（可选）
+/en/* /:splat 301
+/zh/* /:splat?lang=zh 301
+/es/* /:splat?lang=es 301
+/fr/* /:splat?lang=fr 301
+
+# API端点重定向（如果有）
+/api/games /data/games.json 200
+/api/languages/:lang /languages/:lang.json 200
+
+# 404页面处理
+/* /index.html 200
+
+# 特殊文件处理
+/.well-known/* /.well-known/:splat 200

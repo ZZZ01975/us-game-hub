@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>错误处理测试 - US Game Hub</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/game.css">
+    <style>
+        .test-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: var(--bg-primary);
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+        
+        .test-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+        }
+        
+        .test-btn {
+            padding: 10px 16px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .test-btn:hover {
+            background: var(--primary-hover);
+        }
+        
+        .demo-container {
+            min-height: 300px;
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            margin-top: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>错误处理功能测试</h1>
+        <p>这个页面用于测试US Game Hub的错误处理功能。</p>
+        
+        <!-- 网络错误测试 -->
+        <div class="test-section">
+            <h2>网络错误处理测试</h2>
+            <p>测试网络连接失败、超时等情况的处理。</p>
+            <div class="test-buttons">
+                <button class="test-btn" onclick="testNetworkError()">模拟网络错误</button>
+                <button class="test-btn" onclick="testTimeoutError()">模拟请求超时</button>
+                <button class="test-btn" onclick="testServerError()">模拟服务器错误</button>
+                <button class="test-btn" onclick="testOfflineMode()">模拟离线状态</button>
+            </div>
+            <div id="network-demo" class="demo-container"></div>
+        </div>
+        
+        <!-- 游戏加载错误测试 -->
+        <div class="test-section">
+            <h2>游戏加载错误处理测试</h2>
+            <p>测试游戏iframe加载失败、超时等情况的处理。</p>
+            <div class="test-buttons">
+                <button class="test-btn" onclick="testGameLoadError()">模拟游戏加载失败</button>
+                <button class="test-btn" onclick="testGameTimeout()">模拟游戏加载超时</button>
+                <button class="test-btn" onclick="testInvalidGameUrl()">模拟无效游戏URL</button>
+                <button class="test-btn" onclick="testGameUnavailable()">模拟游戏不可用</button>
+            </div>
+            <div id="game-demo" class="demo-container"></div>
+        </div>
+        
+        <!-- 错误对话框测试 -->
+        <div class="test-section">
+            <h2>错误对话框测试</h2>
+            <p>测试各种错误对话框的显示效果。</p>
+            <div class="test-buttons">
+                <button class="test-btn" onclick="testErrorDialog()">显示错误对话框</button>
+                <button class="test-btn" onclick="testWarningDialog()">显示警告对话框</button>
+                <button class="test-btn" onclick="testTimeoutDialog()">显示超时对话框</button>
+                <button class="test-btn" onclick="testOfflineDialog()">显示离线对话框</button>
+            </div>
+        </div>
+        
+        <!-- 返回首页 -->
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="index.html" class="test-btn" style="text-decoration: none; display: inline-block;">
+                返回首页
+            </a>
+        </div>
+    </div>
+
+    <script type="module">
+        import errorHandler from './js/modules/ErrorHandler.js';
+        import gameErrorHandler from './js/modules/GameErrorHandler.js';
+        
+        // 网络错误测试函数
+        window.testNetworkError = function() {
+            const container = document.getElementById('network-demo');
+            errorHandler._showNetworkErrorDialog('网络连接失败', 'data/games.json', {});
+        };
+        
+        window.testTimeoutError = function() {
+            const container = document.getElementById('network-demo');
+            errorHandler._showTimeoutDialog('data/games.json');
+        };
+        
+        window.testServerError = function() {
+            const container = document.getElementById('network-demo');
+            errorHandler._showServerErrorDialog(500);
+        };
+        
+        window.testOfflineMode = function() {
+            const container = document.getElementById('network-demo');
+            errorHandler._showOfflineDialog();
+        };
+        
+        // 游戏加载错误测试函数
+        window.testGameLoadError = function() {
+            const container = document.getElementById('game-demo');
+            gameErrorHandler._showGameErrorInterface('测试游戏', container, 'games/test/index.html');
+        };
+        
+        window.testGameTimeout = function() {
+            const container = document.getElementById('game-demo');
+            gameErrorHandler._showGameTimeoutInterface('测试游戏', container, 'games/test/index.html');
+        };
+        
+        window.testInvalidGameUrl = function() {
+            const container = document.getElementById('game-demo');
+            container.innerHTML = `
+                <div class="game-error-interface">
+                    <div class="error-content">
+                        <div class="error-icon">🚫</div>
+                        <h3 class="error-title">无效的游戏URL</h3>
+                        <p class="error-message">游戏链接无效或已失效，无法加载游戏。</p>
+                        <div class="error-actions">
+                            <button class="btn btn-primary" onclick="window.location.reload()">
+                                <span>🔄</span>
+                                <span>刷新页面</span>
+                            </button>
+                            <button class="btn btn-secondary" onclick="alert('查找替代游戏')">
+                                <span>🎮</span>
+                                <span>查找替代游戏</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        };
+        
+        window.testGameUnavailable = function() {
+            const container = document.getElementById('game-demo');
+            container.innerHTML = `
+                <div class="game-unavailable">
+                    <div class="unavailable-content">
+                        <div class="unavailable-icon">🚧</div>
+                        <h3 class="unavailable-title">游戏暂不可用</h3>
+                        <p class="unavailable-message">该游戏正在维护中，敬请期待！</p>
+                        <div class="unavailable-actions">
+                            <button class="btn btn-primary" onclick="window.location.reload()">
+                                <span>🔄</span>
+                                <span>刷新页面</span>
+                            </button>
+                            <button class="btn btn-secondary" onclick="alert('查看其他游戏')">
+                                <span>🎮</span>
+                                <span>查看其他游戏</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        };
+        
+        // 错误对话框测试函数
+        window.testErrorDialog = function() {
+            errorHandler._showErrorDialog({
+                title: '测试错误',
+                message: '这是一个测试错误对话框，用于演示错误处理功能。',
+                type: 'error',
+                actions: [
+                    {
+                        text: '重试',
+                        action: () => alert('点击了重试按钮')
+                    },
+                    {
+                        text: '取消',
+                        action: () => console.log('点击了取消按钮')
+                    }
+                ]
+            });
+        };
+        
+        window.testWarningDialog = function() {
+            errorHandler._showErrorDialog({
+                title: '警告提示',
+                message: '这是一个警告对话框，提醒用户注意某些问题。',
+                type: 'warning',
+                actions: [
+                    {
+                        text: '我知道了',
+                        action: () => console.log('用户确认了警告')
+                    },
+                    {
+                        text: '不再提示',
+                        action: () => alert('已设置不再提示')
+                    }
+                ]
+            });
+        };
+        
+        window.testTimeoutDialog = function() {
+            errorHandler._showErrorDialog({
+                title: '请求超时',
+                message: '网络请求超时，请检查您的网络连接。',
+                type: 'warning',
+                actions: [
+                    {
+                        text: '重试',
+                        action: () => alert('正在重试...')
+                    },
+                    {
+                        text: '取消',
+                        action: () => console.log('用户取消了操作')
+                    }
+                ]
+            });
+        };
+        
+        window.testOfflineDialog = function() {
+            errorHandler._showErrorDialog({
+                title: '网络连接异常',
+                message: '当前网络不可用，请检查您的网络连接后重试。',
+                type: 'warning',
+                actions: [
+                    {
+                        text: '重试',
+                        action: () => window.location.reload()
+                    },
+                    {
+                        text: '离线模式',
+                        action: () => alert('已切换到离线模式')
+                    }
+                ]
+            });
+        };
+        
+        console.log('错误处理测试页面已加载');
+    </script>
+</body>
+</html>

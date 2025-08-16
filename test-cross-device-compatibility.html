@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>跨设备兼容性测试 - US Game Hub</title>
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        .test-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--bg-primary);
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .test-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+        
+        .test-section h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .info-item {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: 6px;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .info-value {
+            color: var(--text-primary);
+            font-size: 1rem;
+            margin-top: 0.25rem;
+        }
+        
+        .support-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+        
+        .support-yes {
+            background-color: #4CAF50;
+        }
+        
+        .support-no {
+            background-color: #f44336;
+        }
+        
+        .test-button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+            transition: all 0.2s ease;
+        }
+        
+        .test-button:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+        
+        .test-result {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 6px;
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .compatibility-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin: 0.25rem;
+        }
+        
+        .badge-excellent {
+            background: #E8F5E8;
+            color: #2E7D32;
+        }
+        
+        .badge-good {
+            background: #FFF3E0;
+            color: #F57C00;
+        }
+        
+        .badge-poor {
+            background: #FFEBEE;
+            color: #C62828;
+        }
+        
+        .feature-test {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .feature-test:last-child {
+            border-bottom: none;
+        }
+        
+        .responsive-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .demo-card {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>跨设备兼容性测试</h1>
+        <p>此页面用于测试US Game Hub在不同设备和浏览器上的兼容性。</p>
+        
+        <!-- 设备信息 -->
+        <div class="test-section">
+            <h3>设备信息</h3>
+            <div class="info-grid" id="device-info">
+                <!-- 设备信息将通过JavaScript填充 -->
+            </div>
+        </div>
+        
+        <!-- 浏览器信息 -->
+        <div class="test-section">
+            <h3>浏览器信息</h3>
+            <div class="info-grid" id="browser-info">
+                <!-- 浏览器信息将通过JavaScript填充 -->
+            </div>
+        </div>
+        
+        <!-- 功能支持测试 -->
+        <div class="test-section">
+            <h3>功能支持测试</h3>
+            <div id="feature-support">
+                <!-- 功能支持信息将通过JavaScript填充 -->
+            </div>
+        </div>
+        
+        <!-- 视口信息 -->
+        <div class="test-section">
+            <h3>视口信息</h3>
+            <div class="info-grid" id="viewport-info">
+                <!-- 视口信息将通过JavaScript填充 -->
+            </div>
+            <button class="test-button" onclick="updateViewportInfo()">刷新视口信息</button>
+        </div>
+        
+        <!-- 响应式测试 -->
+        <div class="test-section">
+            <h3>响应式布局测试</h3>
+            <p>调整浏览器窗口大小查看响应式效果：</p>
+            <div class="responsive-demo">
+                <div class="demo-card">卡片 1</div>
+                <div class="demo-card">卡片 2</div>
+                <div class="demo-card">卡片 3</div>
+                <div class="demo-card">卡片 4</div>
+                <div class="demo-card">卡片 5</div>
+                <div class="demo-card">卡片 6</div>
+            </div>
+        </div>
+        
+        <!-- 交互测试 -->
+        <div class="test-section">
+            <h3>交互功能测试</h3>
+            <button class="test-button" onclick="testTouch()">测试触摸支持</button>
+            <button class="test-button" onclick="testVibration()">测试振动</button>
+            <button class="test-button" onclick="testNotification()">测试通知</button>
+            <button class="test-button" onclick="testClipboard()">测试剪贴板</button>
+            <button class="test-button" onclick="testShare()">测试分享</button>
+            <button class="test-button" onclick="testFullscreen()">测试全屏</button>
+            <div id="interaction-results" class="test-result" style="display: none;">
+                <!-- 交互测试结果 -->
+            </div>
+        </div>
+        
+        <!-- 性能测试 -->
+        <div class="test-section">
+            <h3>性能信息</h3>
+            <div class="info-grid" id="performance-info">
+                <!-- 性能信息将通过JavaScript填充 -->
+            </div>
+            <button class="test-button" onclick="runPerformanceTest()">运行性能测试</button>
+        </div>
+        
+        <!-- 兼容性评分 -->
+        <div class="test-section">
+            <h3>兼容性评分</h3>
+            <div id="compatibility-score">
+                <!-- 兼容性评分将通过JavaScript计算 -->
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import crossDeviceCompatibilityManager from './js/modules/CrossDeviceCompatibilityManager.js';
+        
+        // 初始化兼容性管理器
+        crossDeviceCompatibilityManager.init();
+        
+        // 全局函数
+        window.updateViewportInfo = updateViewportInfo;
+        window.testTouch = testTouch;
+        window.testVibration = testVibration;
+        window.testNotification = testNotification;
+        window.testClipboard = testClipboard;
+        window.testShare = testShare;
+        window.testFullscreen = testFullscreen;
+        window.runPerformanceTest = runPerformanceTest;
+        
+        // 页面加载完成后显示信息
+        document.addEventListener('DOMContentLoaded', () => {
+            displayDeviceInfo();
+            displayBrowserInfo();
+            displayFeatureSupport();
+            displayViewportInfo();
+            displayPerformanceInfo();
+            calculateCompatibilityScore();
+        });
+        
+        function displayDeviceInfo() {
+            const deviceInfo = crossDeviceCompatibilityManager.getDeviceInfo();
+            const container = document.getElementById('device-info');
+            
+            container.innerHTML = `
+                <div class="info-item">
+                    <div class="info-label">设备类型</div>
+                    <div class="info-value">${deviceInfo.category}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">操作系统</div>
+                    <div class="info-value">${getOSName(deviceInfo)}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">屏幕尺寸</div>
+                    <div class="info-value">${deviceInfo.screenWidth} × ${deviceInfo.screenHeight}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">像素比</div>
+                    <div class="info-value">${deviceInfo.pixelRatio}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">触摸支持</div>
+                    <div class="info-value">${deviceInfo.hasTouch ? '是' : '否'}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">最大触摸点</div>
+                    <div class="info-value">${deviceInfo.maxTouchPoints}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">内存</div>
+                    <div class="info-value">${deviceInfo.memory ? deviceInfo.memory + ' GB' : '未知'}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">CPU核心</div>
+                    <div class="info-value">${deviceInfo.hardwareConcurrency}</div>
+                </div>
+            `;
+        }
+        
+        function displayBrowserInfo() {
+            const browserInfo = crossDeviceCompatibilityManager.getBrowserInfo();
+            const container = document.getElementById('browser-info');
+            
+            container.innerHTML = `
+                <div class="info-item">
+                    <div class="info-label">浏览器</div>
+                    <div class="info-value">${getBrowserName(browserInfo)}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">版本</div>
+                    <div class="info-value">${browserInfo.version}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">渲染引擎</div>
+                    <div class="info-value">${getEngineName(browserInfo)}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">语言</div>
+                    <div class="info-value">${browserInfo.language}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">用户代理</div>
+                    <div class="info-value" style="font-size: 0.8rem; word-break: break-all;">${browserInfo.userAgent}</div>
+                </div>
+            `;
+        }
+        
+        function displayFeatureSupport() {
+            const supportInfo = crossDeviceCompatibilityManager.getSupportInfo();
+            const container = document.getElementById('feature-support');
+            
+            const features = [
+                { key: 'cssGrid', name: 'CSS Grid' },
+                { key: 'cssFlexbox', name: 'CSS Flexbox' },
+                { key: 'cssCustomProperties', name: 'CSS 自定义属性' },
+                { key: 'cssBackdropFilter', name: 'CSS Backdrop Filter' },
+                { key: 'intersectionObserver', name: 'Intersection Observer' },
+                { key: 'resizeObserver', name: 'Resize Observer' },
+                { key: 'serviceWorker', name: 'Service Worker' },
+                { key: 'webWorker', name: 'Web Worker' },
+                { key: 'localStorage', name: 'Local Storage' },
+                { key: 'sessionStorage', name: 'Session Storage' },
+                { key: 'indexedDB', name: 'IndexedDB' },
+                { key: 'fetch', name: 'Fetch API' },
+                { key: 'webSocket', name: 'WebSocket' },
+                { key: 'webGL', name: 'WebGL' },
+                { key: 'webGL2', name: 'WebGL 2' },
+                { key: 'webAssembly', name: 'WebAssembly' },
+                { key: 'geolocation', name: '地理位置' },
+                { key: 'notifications', name: '通知' },
+                { key: 'clipboard', name: '剪贴板' },
+                { key: 'webShare', name: 'Web Share' },
+                { key: 'vibration', name: '振动' },
+                { key: 'fullscreen', name: '全屏' }
+            ];
+            
+            container.innerHTML = features.map(feature => `
+                <div class="feature-test">
+                    <div>
+                        <span class="support-indicator ${supportInfo[feature.key] ? 'support-yes' : 'support-no'}"></span>
+                        ${feature.name}
+                    </div>
+                    <div>${supportInfo[feature.key] ? '支持' : '不支持'}</div>
+                </div>
+            `).join('');
+        }
+        
+        function displayViewportInfo() {
+            const viewportInfo = crossDeviceCompatibilityManager.getViewportInfo();
+            const container = document.getElementById('viewport-info');
+            
+            container.innerHTML = `
+                <div class="info-item">
+                    <div class="info-label">视口宽度</div>
+                    <div class="info-value">${viewportInfo.width}px</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">视口高度</div>
+                    <div class="info-value">${viewportInfo.height}px</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">可用宽度</div>
+                    <div class="info-value">${viewportInfo.availWidth}px</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">可用高度</div>
+                    <div class="info-value">${viewportInfo.availHeight}px</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">屏幕方向</div>
+                    <div class="info-value">${viewportInfo.orientation}°</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">方向模式</div>
+                    <div class="info-value">${viewportInfo.isLandscape ? '横屏' : '竖屏'}</div>
+                </div>
+            `;
+        }
+        
+        function displayPerformanceInfo() {
+            const container = document.getElementById('performance-info');
+            const deviceInfo = crossDeviceCompatibilityManager.getDeviceInfo();
+            
+            container.innerHTML = `
+                <div class="info-item">
+                    <div class="info-label">设备内存</div>
+                    <div class="info-value">${deviceInfo.memory ? deviceInfo.memory + ' GB' : '未知'}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">CPU核心数</div>
+                    <div class="info-value">${deviceInfo.hardwareConcurrency}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">网络类型</div>
+                    <div class="info-value">${deviceInfo.connection?.effectiveType || '未知'}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">下行速度</div>
+                    <div class="info-value">${deviceInfo.connection?.downlink ? deviceInfo.connection.downlink + ' Mbps' : '未知'}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">RTT</div>
+                    <div class="info-value">${deviceInfo.connection?.rtt ? deviceInfo.connection.rtt + ' ms' : '未知'}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">节省数据</div>
+                    <div class="info-value">${deviceInfo.connection?.saveData ? '是' : '否'}</div>
+                </div>
+            `;
+        }
+        
+        function calculateCompatibilityScore() {
+            const supportInfo = crossDeviceCompatibilityManager.getSupportInfo();
+            const deviceInfo = crossDeviceCompatibilityManager.getDeviceInfo();
+            const browserInfo = crossDeviceCompatibilityManager.getBrowserInfo();
+            
+            let score = 0;
+            let maxScore = 0;
+            
+            // 核心功能评分
+            const coreFeatures = ['cssGrid', 'cssFlexbox', 'fetch', 'localStorage', 'intersectionObserver'];
+            coreFeatures.forEach(feature => {
+                maxScore += 20;
+                if (supportInfo[feature]) score += 20;
+            });
+            
+            // 现代功能评分
+            const modernFeatures = ['serviceWorker', 'webWorker', 'cssCustomProperties', 'resizeObserver'];
+            modernFeatures.forEach(feature => {
+                maxScore += 10;
+                if (supportInfo[feature]) score += 10;
+            });
+            
+            // 高级功能评分
+            const advancedFeatures = ['webGL', 'webAssembly', 'cssBackdropFilter', 'webShare'];
+            advancedFeatures.forEach(feature => {
+                maxScore += 5;
+                if (supportInfo[feature]) score += 5;
+            });
+            
+            const percentage = Math.round((score / maxScore) * 100);
+            let badge = 'badge-poor';
+            let level = '需要改进';
+            
+            if (percentage >= 90) {
+                badge = 'badge-excellent';
+                level = '优秀';
+            } else if (percentage >= 70) {
+                badge = 'badge-good';
+                level = '良好';
+            }
+            
+            const container = document.getElementById('compatibility-score');
+            container.innerHTML = `
+                <div style="text-align: center; margin-bottom: 1rem;">
+                    <div style="font-size: 3rem; font-weight: bold; color: var(--primary-color);">${percentage}%</div>
+                    <div class="compatibility-badge ${badge}">${level}</div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">支持的功能</div>
+                        <div class="info-value">${score} / ${maxScore}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">设备类型</div>
+                        <div class="info-value">${deviceInfo.category}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">浏览器</div>
+                        <div class="info-value">${getBrowserName(browserInfo)}</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">推荐程度</div>
+                        <div class="info-value">${getRecommendation(percentage)}</div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function updateViewportInfo() {
+            displayViewportInfo();
+        }
+        
+        function testTouch() {
+            const deviceInfo = crossDeviceCompatibilityManager.getDeviceInfo();
+            showTestResult(`触摸支持: ${deviceInfo.hasTouch ? '是' : '否'}, 最大触摸点: ${deviceInfo.maxTouchPoints}`);
+        }
+        
+        function testVibration() {
+            if (navigator.vibrate) {
+                navigator.vibrate(200);
+                showTestResult('振动测试: 成功 (设备应该振动了200ms)');
+            } else {
+                showTestResult('振动测试: 不支持');
+            }
+        }
+        
+        async function testNotification() {
+            if ('Notification' in window) {
+                const permission = await Notification.requestPermission();
+                if (permission === 'granted') {
+                    new Notification('测试通知', {
+                        body: '这是一个测试通知',
+                        icon: 'favicon.svg'
+                    });
+                    showTestResult('通知测试: 成功');
+                } else {
+                    showTestResult('通知测试: 权限被拒绝');
+                }
+            } else {
+                showTestResult('通知测试: 不支持');
+            }
+        }
+        
+        async function testClipboard() {
+            if (navigator.clipboard) {
+                try {
+                    await navigator.clipboard.writeText('US Game Hub 兼容性测试');
+                    showTestResult('剪贴板测试: 成功 (文本已复制)');
+                } catch (err) {
+                    showTestResult('剪贴板测试: 失败 - ' + err.message);
+                }
+            } else {
+                showTestResult('剪贴板测试: 不支持');
+            }
+        }
+        
+        async function testShare() {
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: 'US Game Hub',
+                        text: '跨设备兼容性测试',
+                        url: window.location.href
+                    });
+                    showTestResult('分享测试: 成功');
+                } catch (err) {
+                    showTestResult('分享测试: 取消或失败');
+                }
+            } else {
+                showTestResult('分享测试: 不支持');
+            }
+        }
+        
+        function testFullscreen() {
+            if (document.fullscreenEnabled) {
+                if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen().then(() => {
+                        showTestResult('全屏测试: 进入全屏模式');
+                        setTimeout(() => {
+                            document.exitFullscreen();
+                        }, 2000);
+                    });
+                } else {
+                    document.exitFullscreen();
+                    showTestResult('全屏测试: 退出全屏模式');
+                }
+            } else {
+                showTestResult('全屏测试: 不支持');
+            }
+        }
+        
+        function runPerformanceTest() {
+            const start = performance.now();
+            
+            // 简单的性能测试
+            let result = 0;
+            for (let i = 0; i < 1000000; i++) {
+                result += Math.random();
+            }
+            
+            const end = performance.now();
+            const duration = Math.round(end - start);
+            
+            showTestResult(`性能测试: 100万次随机数计算耗时 ${duration}ms`);
+        }
+        
+        function showTestResult(message) {
+            const container = document.getElementById('interaction-results');
+            container.style.display = 'block';
+            container.innerHTML = `<strong>测试结果:</strong> ${message}`;
+        }
+        
+        function getOSName(deviceInfo) {
+            if (deviceInfo.isIOS) return 'iOS';
+            if (deviceInfo.isAndroid) return 'Android';
+            if (deviceInfo.isWindows) return 'Windows';
+            if (deviceInfo.isMacOS) return 'macOS';
+            if (deviceInfo.isLinux) return 'Linux';
+            return '未知';
+        }
+        
+        function getBrowserName(browserInfo) {
+            if (browserInfo.isChrome) return 'Chrome';
+            if (browserInfo.isFirefox) return 'Firefox';
+            if (browserInfo.isSafari) return 'Safari';
+            if (browserInfo.isEdge) return 'Edge';
+            if (browserInfo.isIE) return 'Internet Explorer';
+            if (browserInfo.isOpera) return 'Opera';
+            return '未知';
+        }
+        
+        function getEngineName(browserInfo) {
+            if (browserInfo.isBlink) return 'Blink';
+            if (browserInfo.isWebKit) return 'WebKit';
+            if (browserInfo.isGecko) return 'Gecko';
+            if (browserInfo.isTrident) return 'Trident';
+            return '未知';
+        }
+        
+        function getRecommendation(percentage) {
+            if (percentage >= 90) return '强烈推荐使用';
+            if (percentage >= 70) return '推荐使用';
+            if (percentage >= 50) return '基本可用';
+            return '建议升级浏览器';
+        }
+    </script>
+</body>
+</html>

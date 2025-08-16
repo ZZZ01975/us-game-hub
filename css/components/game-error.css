@@ -1,0 +1,478 @@
+/**
+ * 游戏错误处理界面样式
+ * 用于显示游戏加载失败、超时等错误状态
+ */
+
+/* 游戏错误界面基础样式 */
+.game-error-interface,
+.game-timeout-interface,
+.game-retry-interface {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    padding: 40px 20px;
+    background: var(--bg-primary);
+    border-radius: 12px;
+    border: 2px dashed var(--border-color);
+    text-align: center;
+}
+
+/* 错误内容容器 */
+.error-content,
+.timeout-content,
+.retry-content {
+    max-width: 400px;
+    width: 100%;
+}
+
+/* 错误图标 */
+.error-icon,
+.timeout-icon {
+    font-size: 48px;
+    margin-bottom: 20px;
+    opacity: 0.8;
+}
+
+.error-icon {
+    color: var(--error-color);
+}
+
+.timeout-icon {
+    color: var(--warning-color);
+}
+
+/* 错误标题 */
+.error-title,
+.timeout-title,
+.retry-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 16px;
+}
+
+/* 错误消息 */
+.error-message,
+.timeout-message,
+.retry-message {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0 0 24px;
+}
+
+/* 错误操作按钮区域 */
+.error-actions,
+.timeout-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.error-actions .btn,
+.timeout-actions .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    border: 1px solid transparent;
+}
+
+.error-actions .btn.btn-primary,
+.timeout-actions .btn.btn-primary {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.error-actions .btn.btn-primary:hover,
+.timeout-actions .btn.btn-primary:hover {
+    background: var(--primary-hover);
+    border-color: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+.error-actions .btn.btn-secondary,
+.timeout-actions .btn.btn-secondary {
+    background: var(--secondary-color);
+    color: white;
+    border-color: var(--secondary-color);
+}
+
+.error-actions .btn.btn-secondary:hover,
+.timeout-actions .btn.btn-secondary:hover {
+    background: var(--secondary-hover);
+    border-color: var(--secondary-hover);
+    transform: translateY(-1px);
+}
+
+.error-actions .btn.btn-ghost,
+.timeout-actions .btn.btn-ghost {
+    background: transparent;
+    color: var(--text-secondary);
+    border-color: var(--border-color);
+}
+
+.error-actions .btn.btn-ghost:hover,
+.timeout-actions .btn.btn-ghost:hover {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border-color: var(--border-hover);
+}
+
+/* 技术详情 */
+.error-details {
+    margin-top: 20px;
+    text-align: left;
+}
+
+.error-details details {
+    background: var(--bg-secondary);
+    border-radius: 6px;
+    padding: 12px;
+}
+
+.error-details summary {
+    font-size: 14px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    user-select: none;
+}
+
+.error-details summary:hover {
+    color: var(--text-primary);
+}
+
+.tech-details {
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--text-light);
+    font-family: monospace;
+}
+
+.tech-details p {
+    margin: 4px 0;
+    word-break: break-all;
+}
+
+/* 重试界面样式 */
+.retry-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--bg-secondary);
+    border-top: 4px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+.retry-progress {
+    margin-top: 16px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background: var(--bg-secondary);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--primary-color);
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+/* 游戏加载状态 */
+.game-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.game-loading .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--bg-secondary);
+    border-top: 4px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20px;
+}
+
+.game-loading h3 {
+    font-size: 20px;
+    color: var(--text-primary);
+    margin: 0 0 8px;
+}
+
+.game-loading p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* 游戏占位符 */
+.game-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    padding: 40px 20px;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    text-align: center;
+    border: 2px dashed var(--border-color);
+}
+
+.placeholder-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+    opacity: 0.6;
+}
+
+.game-placeholder h3 {
+    font-size: 24px;
+    color: var(--text-primary);
+    margin: 0 0 12px;
+}
+
+.game-placeholder p {
+    font-size: 16px;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* 游戏iframe容器 */
+.game-iframe-container {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--bg-secondary);
+}
+
+.game-iframe-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 12px;
+}
+
+/* 游戏控制栏 */
+.game-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: var(--bg-primary);
+    border-radius: 8px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow-sm);
+}
+
+.game-controls-left,
+.game-controls-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.game-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--success-color);
+}
+
+.status-indicator.loading {
+    background: var(--warning-color);
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+.status-indicator.error {
+    background: var(--error-color);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .game-error-interface,
+    .game-timeout-interface,
+    .game-retry-interface {
+        min-height: 300px;
+        padding: 30px 15px;
+    }
+
+    .error-icon,
+    .timeout-icon {
+        font-size: 36px;
+        margin-bottom: 16px;
+    }
+
+    .error-title,
+    .timeout-title,
+    .retry-title {
+        font-size: 20px;
+        margin-bottom: 12px;
+    }
+
+    .error-message,
+    .timeout-message,
+    .retry-message {
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+
+    .error-actions,
+    .timeout-actions {
+        gap: 10px;
+        margin-bottom: 16px;
+    }
+
+    .game-controls {
+        flex-direction: column;
+        gap: 12px;
+        padding: 12px;
+    }
+
+    .game-controls-left,
+    .game-controls-right {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .game-iframe-container {
+        height: 300px;
+    }
+
+    .placeholder-icon {
+        font-size: 48px;
+        margin-bottom: 16px;
+    }
+
+    .game-placeholder h3 {
+        font-size: 20px;
+        margin-bottom: 8px;
+    }
+
+    .game-placeholder p {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .error-actions .btn,
+    .timeout-actions .btn {
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+
+    .game-iframe-container {
+        height: 250px;
+    }
+
+    .tech-details {
+        font-size: 11px;
+    }
+}
+
+/* 动画定义 */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* 暗色主题适配 */
+@media (prefers-color-scheme: dark) {
+    .game-error-interface,
+    .game-timeout-interface,
+    .game-retry-interface {
+        border-color: var(--border-dark);
+    }
+
+    .game-placeholder {
+        background: var(--bg-dark);
+        border-color: var(--border-dark);
+    }
+
+    .error-details details {
+        background: var(--bg-dark);
+    }
+
+    .progress-bar {
+        background: var(--bg-dark);
+    }
+}
+
+/* 高对比度模式 */
+@media (prefers-contrast: high) {
+    .game-error-interface,
+    .game-timeout-interface,
+    .game-retry-interface {
+        border: 3px solid var(--text-primary);
+    }
+
+    .error-actions .btn,
+    .timeout-actions .btn {
+        border: 2px solid currentColor;
+    }
+
+    .status-indicator {
+        border: 2px solid var(--text-primary);
+    }
+}
+
+/* 减少动画偏好 */
+@media (prefers-reduced-motion: reduce) {
+    .retry-spinner,
+    .loading-spinner {
+        animation: none;
+        border-top-color: var(--primary-color);
+    }
+
+    .status-indicator.loading {
+        animation: none;
+    }
+
+    .progress-fill {
+        transition: none;
+    }
+}

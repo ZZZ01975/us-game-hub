@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据管理系统测试 - US Game Hub</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components/advanced-filter.css">
+    <style>
+        body {
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+        }
+        .test-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .test-result {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        .test-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .test-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .test-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        .test-button:hover {
+            background: #0056b3;
+        }
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .game-card-mini {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+        }
+        .game-card-mini img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        .game-card-mini h4 {
+            margin: 8px 0 4px;
+            font-size: 0.9rem;
+        }
+        .game-card-mini .rating {
+            color: #ffa500;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>数据管理系统测试</h1>
+        <p>这个页面用于测试新的数据管理、验证、筛选和排序功能。</p>
+
+        <!-- 数据验证测试 -->
+        <div class="test-section">
+            <h2 class="test-title">1. 数据验证测试</h2>
+            <button class="test-button" onclick="testDataValidation()">运行数据验证</button>
+            <div id="validation-result" class="test-result"></div>
+        </div>
+
+        <!-- 数据加载测试 -->
+        <div class="test-section">
+            <h2 class="test-title">2. 数据加载测试</h2>
+            <button class="test-button" onclick="testDataLoading()">加载游戏数据</button>
+            <div id="loading-result" class="test-result"></div>
+        </div>
+
+        <!-- 筛选功能测试 -->
+        <div class="test-section">
+            <h2 class="test-title">3. 筛选功能测试</h2>
+            <button class="test-button" onclick="testCategoryFilter()">按分类筛选</button>
+            <button class="test-button" onclick="testRatingFilter()">按评分筛选</button>
+            <button class="test-button" onclick="testTagFilter()">按标签筛选</button>
+            <div id="filter-result" class="test-result"></div>
+        </div>
+
+        <!-- 排序功能测试 -->
+        <div class="test-section">
+            <h2 class="test-title">4. 排序功能测试</h2>
+            <button class="test-button" onclick="testSortByRating()">按评分排序</button>
+            <button class="test-button" onclick="testSortByPlayCount()">按播放次数排序</button>
+            <button class="test-button" onclick="testSortByDate()">按日期排序</button>
+            <div id="sort-result" class="test-result"></div>
+        </div>
+
+        <!-- 搜索功能测试 -->
+        <div class="test-section">
+            <h2 class="test-title">5. 搜索功能测试</h2>
+            <input type="text" id="search-input" placeholder="输入搜索关键词..." style="padding: 8px; margin-right: 10px; border: 1px solid #ccc; border-radius: 4px;">
+            <button class="test-button" onclick="testSearch()">搜索游戏</button>
+            <div id="search-result" class="test-result"></div>
+        </div>
+
+        <!-- 高级筛选界面测试 -->
+        <div class="test-section">
+            <h2 class="test-title">6. 高级筛选界面测试</h2>
+            <button class="test-button" onclick="initAdvancedFilter()">初始化筛选界面</button>
+            <div id="advanced-filter-container"></div>
+        </div>
+
+        <!-- 游戏展示区域 -->
+        <div class="test-section">
+            <h2 class="test-title">7. 游戏展示区域</h2>
+            <div id="games-display" class="games-grid"></div>
+        </div>
+    </div>
+
+    <!-- 引入必要的脚本 -->
+    <script src="js/utils/dataValidator.js"></script>
+    <script src="js/modules/DataManager.js"></script>
+    <script src="js/modules/FilterSortManager.js"></script>
+    <script src="js/modules/AdvancedFilterUI.js"></script>
+
+    <script>
+        // 全局变量
+        let dataManager;
+        let filterSortManager;
+        let advancedFilterUI;
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            dataManager = new DataManager();
+            filterSortManager = new FilterSortManager(dataManager);
+            
+            console.log('测试页面初始化完成');
+        });
+
+        // 数据验证测试
+        async function testDataValidation() {
+            const resultDiv = document.getElementById('validation-result');
+            resultDiv.textContent = '正在验证数据...';
+
+            try {
+                const response = await fetch('data/games.json');
+                const data = await response.json();
+                
+                const validator = new DataValidator();
+                const result = validator.validateGameData(data);
+                
+                const report = validator.generateReport(result);
+                
+                resultDiv.className = `test-result ${result.isValid ? 'test-success' : 'test-error'}`;
+                resultDiv.textContent = report;
+                
+            } catch (error) {
+                resultDiv.className = 'test-result test-error';
+                resultDiv.textContent = `验证失败: ${error.message}`;
+            }
+        }
+
+        // 数据加载测试
+        async function testDataLoading() {
+            const resultDiv = document.getElementById('loading-result');
+            resultDiv.textContent = '正在加载数据...';
+
+            try {
+                const gameData = await dataManager.loadGameData();
+                
+                const stats = dataManager.getStatistics();
+                
+                const result = `数据加载成功！
+总游戏数: ${stats.totalGames}
+分类统计: ${JSON.stringify(stats.categories, null, 2)}
+平均评分: ${stats.averageRating}
+总播放次数: ${stats.totalPlayCount}
+精选游戏: ${stats.featuredCount}
+新游戏: ${stats.newGamesCount}
+热门游戏: ${stats.hotGamesCount}`;
+
+                resultDiv.className = 'test-result test-success';
+                resultDiv.textContent = result;
+                
+            } catch (error) {
+                resultDiv.className = 'test-result test-error';
+                resultDiv.textContent = `加载失败: ${error.message}`;
+            }
+        }
+
+        // 分类筛选测试
+        async function testCategoryFilter() {
+            const resultDiv = document.getElementById('filter-result');
+            
+            try {
+                await dataManager.loadGameData();
+                
+                filterSortManager.setFilters({ category: 'puzzle' });
+                const games = filterSortManager.applyFiltersAndSort();
+                
+                resultDiv.className = 'test-result test-success';
+                resultDiv.textContent = `益智游戏筛选结果: 找到 ${games.length} 个游戏\n\n` +
+                    games.map(game => `- ${game.title.zh || game.title.en} (评分: ${game.rating})`).join('\n');
+                
+                displayGames(games);
+                
+            } catch (error) {
+                resultDiv.className = 'test-result test-error';
+                resultDiv.textContent = `筛选失败: ${error.message}`;
+            }
+        }
+
+        // 评分筛选测试
+        async function testRatingFilter() {
+            const resultDiv = document.getElementById('filter-result');
+            
+            try {
+                await dataManager.loadGameData();
+                
+                filterSortManager.setFilters({ 
+                    rating: { min: 4.0, max: 5.0 } 
+                });
+                const games = filterSortManager.applyFiltersAndSort();
+                
+                resultDiv.className = 'test-result test-success';
+                resultDiv.textContent = `高评分游戏筛选结果: 找到 ${games.length} 个游戏\n\n` +
+                    games.map(game => `- ${game.title.zh || game.title.en} (评分: ${game.rating})`).join('\n');
+                
+                displayGames(games);
+                
+            } catch (error) {
+                resultDiv.className = 'test-result test-error';
+                resultDiv.textContent = `筛选失败: ${error.message}`;
+            }
+        }
+
+        // 标签筛选测试
+        async function testTagFilter() {
+            const resultDiv = document.getElementById('filter-result');
+            
+            try {
+                await dataManager.loadGameData();
+                
+                filterSortManager.setFilters({ 
+                    tags: ['featured'] 
+                });
+                const games = filterSortManager.applyFiltersAndSort();
+                
+                resultDiv.className = 'test-result test-success';
+                resultDiv.textContent = `精选游戏筛选结果: 找到 ${games.length} 个游戏\n\n` +
+                    games.map(game => `- ${game.title.zh || game.title.en} (标签: ${game.tags.join(', ')})`).join('\n');
+                
+                displayGames(games);
+                
+            } catch (error) {
+                resultDiv.className = 'test-result test-error';
+                resultDiv.textContent = `筛选失败: ${error.message}`;
+            }
+        }
+
+        // 按评分排序测试
+        async function testSortByRating() {
+            const resultDiv = document.getElementById('sort-result');
+            
+            try {
+                await dataManager.loadGameData();
+                
+                filterSortManager.setSort('rating', 'desc');
+                const games = filterSortManager.applyFiltersAndSort();
+                
+                resultDiv.className = 'test-result test-success';
+                resultDiv.textContent = `按评分排序结果 (前10个):\n\n` +
+                    games.slice(0, 10).map((game, index) => 
+                        `${index + 1}. ${game.title.zh || game.title.en} (评分: ${game.rating})`
+                    ).join('\n');
+                
+                displayGames(games.slice(0, 8));
+                
+            } catch (error) {
+                resultDiv.className = 'test-result test-error';
+                resultDiv.textContent = `排序失败: ${error.message}`;
+            }
+        }
+
+        // 按播放次数排序测试
+        async function testSortByPlayCount() {
+            const resultDiv = document.getElementById('sort-result');
+            
+            try {
+                await dataManager.loadGameData();
+                
+                filterSortManager.setSort('playCount', 'desc');
+                const games = filterSortManager.applyFiltersAndSort();
+                
+                resultDiv.className = 'test-result test-success';
+                resultDiv.textContent = `按播放次数排序结果 (前10个):\n\n` +
+                    games.slice(0, 10).map((game, index) => 
+                        `${index + 1}. ${game.title.zh || game.title.en} (播放: ${game.playCount}次)`
+                    ).join('\n');
+                
+                displayGames(games.slice(0, 8));
+                
+            } catch (error) {
+                resultDiv.className = 'test-result test-error';
+                resultDiv.textContent = `排序失败: ${error.message}`;
+            }
+        }
+
+        // 按日期排序测试
+        async function testSortByDate() {
+            const resultDiv = document.getElementById('sort-result');
+            
+            try {
+                await dataManager.loadGameData();
+                
+                filterSortManager.setSort('addedDate', 'desc');
+                const games = filterSortManager.applyFiltersAndSort();
+                
+                resultDiv.className = 'test-result test-success';
+                resultDiv.textContent = `按添加日期排序结果 (最新的10个):\n\n` +
+                    games.slice(0, 10).map((game, index) => 
+                        `${index + 1}. ${game.title.zh || game.title.en} (${new Date(game.addedDate).toLocaleDateString()})`
+                    ).join('\n');
+                
+                displayGames(games.slice(0, 8));
+                
+            } catch (error) {
+                resultDiv.className = 'test-result test-error';
+                resultDiv.textContent = `排序失败: ${error.message}`;
+            }
+        }
+
+        // 搜索测试
+        async function testSearch() {
+            const resultDiv = document.getElementById('search-result');
+            const searchInput = document.getElementById('search-input');
+            const query = searchInput.value.trim();
+            
+            if (!query) {
+                resultDiv.className = 'test-result test-error';
+                resultDiv.textContent = '请输入搜索关键词';
+                return;
+            }
+            
+            try {
+                await dataManager.loadGameData();
+                
+                const games = dataManager.searchGames(query, 'zh');
+                
+                resultDiv.className = 'test-result test-success';
+                resultDiv.textContent = `搜索 "${query}" 的结果: 找到 ${games.length} 个游戏\n\n` +
+                    games.map(game => `- ${game.title.zh || game.title.en}`).join('\n');
+                
+                displayGames(games);
+                
+            } catch (error) {
+                resultDiv.className = 'test-result test-error';
+                resultDiv.textContent = `搜索失败: ${error.message}`;
+            }
+        }
+
+        // 初始化高级筛选界面
+        async function initAdvancedFilter() {
+            try {
+                await dataManager.loadGameData();
+                
+                if (!advancedFilterUI) {
+                    advancedFilterUI = new AdvancedFilterUI(filterSortManager, null);
+                }
+                
+                advancedFilterUI.init('#advanced-filter-container');
+                
+                // 监听筛选变化
+                document.addEventListener('filterChange', (event) => {
+                    const { games } = event.detail;
+                    displayGames(games);
+                });
+                
+                console.log('高级筛选界面初始化完成');
+                
+            } catch (error) {
+                console.error('初始化高级筛选界面失败:', error);
+            }
+        }
+
+        // 显示游戏
+        function displayGames(games) {
+            const container = document.getElementById('games-display');
+            
+            if (games.length === 0) {
+                container.innerHTML = '<p>没有找到游戏</p>';
+                return;
+            }
+            
+            container.innerHTML = games.map(game => `
+                <div class="game-card-mini">
+                    <img src="${game.coverImage}" alt="${game.title.zh || game.title.en}" 
+                         onerror="this.src='https://via.placeholder.com/200x100/cccccc/666666?text=No+Image'">
+                    <h4>${game.title.zh || game.title.en}</h4>
+                    <div class="rating">⭐ ${game.rating}</div>
+                    <div style="font-size: 0.8rem; color: #666;">
+                        ${game.category} | ${game.playCount} 次播放
+                    </div>
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>

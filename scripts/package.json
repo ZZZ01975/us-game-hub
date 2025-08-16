@@ -1,0 +1,22 @@
+{
+  "name": "us-game-hub-scripts",
+  "version": "1.0.0",
+  "description": "US Game Hub 部署和优化脚本",
+  "main": "optimize-resources.js",
+  "scripts": {
+    "optimize": "node optimize-resources.js",
+    "deploy-check": "node deploy-check.js"
+  },
+  "dependencies": {
+    "imagemin": "^8.0.1",
+    "imagemin-webp": "^7.0.0",
+    "imagemin-mozjpeg": "^10.0.0",
+    "imagemin-pngquant": "^9.0.2",
+    "terser": "^5.19.2",
+    "clean-css": "^5.3.2"
+  },
+  "devDependencies": {},
+  "keywords": ["deployment", "optimization", "github-pages"],
+  "author": "US Game Hub",
+  "license": "MIT"
+}

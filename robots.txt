@@ -1,0 +1,39 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://usgamehub.github.io/sitemap.xml
+
+# Crawl-delay for polite crawling
+Crawl-delay: 1
+
+# Allow all game pages
+Allow: /game.html
+Allow: /games/
+
+# Allow all assets
+Allow: /css/
+Allow: /js/
+Allow: /assets/
+Allow: /images/
+Allow: /languages/
+Allow: /data/
+
+# Allow specific files
+Allow: /favicon.svg
+Allow: /favicon.ico
+Allow: /manifest.json
+
+# Disallow admin areas (if any in the future)
+Disallow: /admin/
+Disallow: /private/
+Disallow: /.git/
+Disallow: /.kiro/
+
+# Disallow temporary files
+Disallow: /*.tmp
+Disallow: /*.log
+Disallow: /*~
+
+# Allow search engines to index all content
+# This is a public gaming website

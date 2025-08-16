@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" data-i18n-title="meta.title">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>US Game Hub - Free Online Games</title>
+    <meta name="description" content="Play free online games at US Game Hub. Enjoy action, puzzle, arcade and casual games directly in your browser.">
+    <meta name="keywords" content="free games, online games, browser games, action games, puzzle games">
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; }
+        .language-selector { margin: 10px 0; }
+        .language-option { margin: 5px; padding: 5px 10px; cursor: pointer; background: #f0f0f0; }
+        .language-option.active { background: #007bff; color: white; }
+    </style>
+</head>
+<body>
+    <h1 data-i18n="ui.welcome">Welcome to US Game Hub</h1>
+    <p data-i18n="ui.subtitle">Discover and play the best free online games</p>
+    
+    <div class="test-section">
+        <h2>Language Selector Test</h2>
+        <div class="language-selector">
+            <div class="language-option active" data-lang="en">English</div>
+            <div class="language-option" data-lang="zh">中文</div>
+            <div class="language-option" data-lang="es">Español</div>
+            <div class="language-option" data-lang="fr">Français</div>
+        </div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Categories Test</h2>
+        <ul>
+            <li data-i18n="categories.all">All Games</li>
+            <li data-i18n="categories.action">Action</li>
+            <li data-i18n="categories.puzzle">Puzzle</li>
+            <li data-i18n="categories.arcade">Arcade</li>
+            <li data-i18n="categories.casual">Casual</li>
+        </ul>
+    </div>
+    
+    <div class="test-section">
+        <h2>UI Elements Test</h2>
+        <button data-i18n="ui.playNow">Play Now</button>
+        <button data-i18n="ui.favorite">Favorite</button>
+        <button data-i18n="ui.share">Share</button>
+        <p data-i18n="ui.loading">Loading...</p>
+    </div>
+    
+    <div class="test-section">
+        <h2>Game Data Test</h2>
+        <div id="game-data-test">
+            <!-- 游戏数据将通过JavaScript填充 -->
+        </div>
+    </div>
+
+    <script type="module">
+        import { I18nManager } from './js/modules/I18nManager.js';
+        import gameManager from './js/modules/GameManager.js';
+        
+        // 初始化国际化管理器
+        const i18nManager = new I18nManager();
+        
+        // 暴露到全局以便测试
+        window.i18nManager = i18nManager;
+        window.gameManager = gameManager;
+        
+        // 设置语言选择器事件
+        document.querySelectorAll('.language-option').forEach(option => {
+            option.addEventListener('click', async (e) => {
+                const lang = option.getAttribute('data-lang');
+                
+                // 更新激活状态
+                document.querySelectorAll('.language-option').forEach(opt => {
+                    opt.classList.remove('active');
+                });
+                option.classList.add('active');
+                
+                // 切换语言
+                await i18nManager.switchLanguage(lang);
+                
+                // 更新游戏数据测试
+                updateGameDataTest();
+            });
+        });
+        
+        // 更新游戏数据测试
+        async function updateGameDataTest() {
+            try {
+                const games = await gameManager.loadGames();
+                const gameDataDiv = document.getElementById('game-data-test');
+                
+                if (games.length > 0) {
+                    const firstGame = games[0];
+                    gameDataDiv.innerHTML = `
+                        <h3>First Game Example:</h3>
+                        <p><strong>Title:</strong> ${firstGame.title}</p>
+                        <p><strong>Description:</strong> ${firstGame.description}</p>
+                        <p><strong>Category:</strong> ${firstGame.category}</p>
+                    `;
+                }
+            } catch (error) {
+                console.error('Failed to load game data:', error);
+                document.getElementById('game-data-test').innerHTML = '<p>Failed to load game data</p>';
+            }
+        }
+        
+        // 初始化时加载游戏数据
+        updateGameDataTest();
+    </script>
+</body>
+</html>

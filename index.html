@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en" data-i18n-title="meta.title">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>US Game Hub - Free Online Games</title>
+    <meta name="description" content="Play free online games at US Game Hub. Enjoy action, puzzle, arcade and casual games directly in your browser.">
+    <meta name="keywords" content="free games, online games, browser games, action games, puzzle games">
+    
+    <!-- 性能优化 -->
+    <meta name="theme-color" content="#667eea">
+    <meta name="color-scheme" content="dark light">
+    
+    <!-- 预加载关键资源 -->
+    <link rel="preload" href="css/main.css" as="style">
+    <link rel="preload" href="js/main.js" as="script">
+    <link rel="preload" href="data/games.json" as="fetch" crossorigin>
+    <link rel="preload" href="assets/images/placeholder-game.svg" as="image">
+    
+    <!-- DNS预解析 -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="preconnect" href="//fonts.gstatic.com" crossorigin>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="alternate icon" href="favicon.ico">
+    
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- 样式表 -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components/advanced-filter.css">
+    
+    <!-- 关键CSS内联 -->
+    <style>
+        /* 关键CSS - 首屏渲染必需 */
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #ffffff;
+            line-height: 1.6;
+        }
+        
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* 防止布局偏移 */
+        .games-container {
+            min-height: 400px;
+        }
+        
+        .game-card {
+            height: 380px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 双层导航系统 -->
+    <header class="header">
+        <!-- 顶层品牌导航栏 -->
+        <div class="top-navbar">
+            <div class="top-nav-container">
+                <!-- 品牌Logo区域 -->
+                <div class="nav-brand">
+                    <a href="index.html" class="brand-link">
+                        <span class="brand-icon">🎮</span>
+                        <span class="brand-text">US Game Hub</span>
+                    </a>
+                </div>
+                
+                <!-- 搜索框区域 -->
+                <div class="search-container">
+                    <div class="search-box">
+                        <input type="text" id="search-input" class="search-input" data-i18n="nav.search" placeholder="Search games..." autocomplete="off">
+                        <button class="search-btn" type="button" aria-label="搜索">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.35-4.35"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <!-- 搜索结果下拉框 -->
+                    <div class="search-results" id="search-results" style="display: none;">
+                        <!-- 搜索结果将通过JavaScript动态填充 -->
+                    </div>
+                </div>
+                
+                <!-- 用户功能区 -->
+                <div class="user-utils">
+                    <!-- 语言选择器 -->
+                    <div class="language-selector">
+                        <button class="language-btn" id="language-btn" aria-label="选择语言">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="2" y1="12" x2="22" y2="12"></line>
+                                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                            </svg>
+                            <span class="language-text">English</span>
+                            <svg class="dropdown-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6,9 12,15 18,9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="language-dropdown" id="language-dropdown">
+                            <a href="#" class="language-option active" data-lang="en">
+                                <span class="flag">🇺🇸</span>
+                                <span>English</span>
+                            </a>
+                            <a href="#" class="language-option" data-lang="zh">
+                                <span class="flag">🇨🇳</span>
+                                <span>中文</span>
+                            </a>
+                            <a href="#" class="language-option" data-lang="es">
+                                <span class="flag">🇪🇸</span>
+                                <span>Español</span>
+                            </a>
+                            <a href="#" class="language-option" data-lang="fr">
+                                <span class="flag">🇫🇷</span>
+                                <span>Français</span>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- 用户菜单（预留） -->
+                    <div class="user-menu">
+                        <button class="user-btn" aria-label="用户菜单">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 移动端菜单按钮 -->
+                <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="菜单">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+            </div>
+        </div>
+        
+        <!-- 底层分类导航 -->
+        <nav class="category-navbar">
+            <div class="category-nav-container">
+                <ul class="category-menu" id="category-menu">
+                    <li class="category-item">
+                        <a href="#" class="category-link active" data-category="all">
+                            <span class="category-icon">🎯</span>
+                            <span class="category-text" data-i18n="categories.all">All Games</span>
+                        </a>
+                    </li>
+                    <li class="category-item">
+                        <a href="#" class="category-link" data-category="action">
+                            <span class="category-icon">⚔️</span>
+                            <span class="category-text" data-i18n="categories.action">Action</span>
+                        </a>
+                    </li>
+                    <li class="category-item">
+                        <a href="#" class="category-link" data-category="puzzle">
+                            <span class="category-icon">🧩</span>
+                            <span class="category-text" data-i18n="categories.puzzle">Puzzle</span>
+                        </a>
+                    </li>
+                    <li class="category-item">
+                        <a href="#" class="category-link" data-category="arcade">
+                            <span class="category-icon">🕹️</span>
+                            <span class="category-text" data-i18n="categories.arcade">Arcade</span>
+                        </a>
+                    </li>
+                    <li class="category-item">
+                        <a href="#" class="category-link" data-category="casual">
+                            <span class="category-icon">🎲</span>
+                            <span class="category-text" data-i18n="categories.casual">Casual</span>
+                        </a>
+                    </li>
+                    <li class="category-item">
+                        <a href="#" class="category-link" data-category="sports">
+                            <span class="category-icon">⚽</span>
+                            <span class="category-text" data-i18n="categories.sports">Sports</span>
+                        </a>
+                    </li>
+                    <li class="category-item">
+                        <a href="#" class="category-link" data-category="racing">
+                            <span class="category-icon">🏎️</span>
+                            <span class="category-text" data-i18n="categories.racing">Racing</span>
+                        </a>
+                    </li>
+                </ul>
+                
+                <!-- 移动端分类菜单 -->
+                <div class="mobile-category-menu" id="mobile-category-menu">
+                    <div class="mobile-menu-header">
+                        <h3 data-i18n="nav.categories">Game Categories</h3>
+                        <button class="mobile-menu-close" id="mobile-menu-close" aria-label="关闭菜单">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+                    <ul class="mobile-category-list">
+                        <li><a href="#" class="mobile-category-link active" data-category="all" data-i18n="categories.all">🎯 All Games</a></li>
+                        <li><a href="#" class="mobile-category-link" data-category="action" data-i18n="categories.action">⚔️ Action</a></li>
+                        <li><a href="#" class="mobile-category-link" data-category="puzzle" data-i18n="categories.puzzle">🧩 Puzzle</a></li>
+                        <li><a href="#" class="mobile-category-link" data-category="arcade" data-i18n="categories.arcade">🕹️ Arcade</a></li>
+                        <li><a href="#" class="mobile-category-link" data-category="casual" data-i18n="categories.casual">🎲 Casual</a></li>
+                        <li><a href="#" class="mobile-category-link" data-category="sports" data-i18n="categories.sports">⚽ Sports</a></li>
+                        <li><a href="#" class="mobile-category-link" data-category="racing" data-i18n="categories.racing">🏎️ Racing</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 主要内容区域 -->
+    <main class="main-content">
+        <!-- 欢迎区域 -->
+        <section class="hero-section">
+            <h2 data-i18n="ui.welcome">Welcome to US Game Hub</h2>
+            <p data-i18n="ui.subtitle">Discover and play the best free online games</p>
+        </section>
+
+        <!-- 精选游戏区域 -->
+        <section class="featured-games-section" id="featured-games-section">
+            <div class="section-header">
+                <h2 class="section-title" data-i18n="sections.featured">Featured Games</h2>
+                <div class="section-controls">
+                    <button class="view-toggle-btn" id="featured-view-toggle" data-view="grid" aria-label="切换视图模式">
+                        <svg class="grid-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                        <svg class="carousel-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                            <line x1="8" y1="21" x2="16" y2="21"></line>
+                            <line x1="12" y1="17" x2="12" y2="21"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="featured-games-container" id="featured-games-container">
+                <!-- 精选游戏将通过JavaScript动态加载 -->
+            </div>
+        </section>
+
+        <!-- 最近游玩区域 -->
+        <section class="recent-games-section" id="recent-games-section" style="display: none;">
+            <!-- 最近游玩的游戏将通过JavaScript动态加载 -->
+        </section>
+
+        <!-- 最新游戏区域 -->
+        <section class="new-games-section" id="new-games-section">
+            <div class="section-header">
+                <h2 class="section-title" data-i18n="sections.newGames">New Games</h2>
+                <button class="view-more-btn" id="new-games-view-more" data-i18n="ui.viewMore">View More</button>
+            </div>
+            <div class="new-games-container" id="new-games-container">
+                <!-- 最新游戏将通过JavaScript动态加载 -->
+            </div>
+        </section>
+
+        <!-- 热门游戏区域 -->
+        <section class="most-played-section" id="most-played-section">
+            <div class="section-header">
+                <h2 class="section-title" data-i18n="sections.mostPlayed">Most Played</h2>
+                <button class="view-more-btn" id="most-played-view-more" data-i18n="ui.viewMore">View More</button>
+            </div>
+            <div class="most-played-container" id="most-played-container">
+                <!-- 热门游戏将通过JavaScript动态加载 -->
+            </div>
+        </section>
+
+        <!-- 分类预览区域 -->
+        <section class="categories-preview-section" id="categories-preview-section">
+            <div class="section-header">
+                <h2 class="section-title" data-i18n="sections.categories">Game Categories</h2>
+                <p class="section-subtitle">探索不同类型的精彩游戏</p>
+            </div>
+            <div class="categories-preview-container" id="categories-preview-container">
+                <!-- 分类预览将通过JavaScript动态加载 -->
+            </div>
+        </section>
+
+        <!-- 收藏游戏区域 -->
+        <section class="favorite-games-section" id="favorite-games-section" style="display: none;">
+            <!-- 收藏的游戏将通过JavaScript动态加载 -->
+        </section>
+
+        <!-- 高级筛选区域 -->
+        <section class="filter-section" id="filter-section">
+            <div id="advanced-filter-container">
+                <!-- 高级筛选界面将通过JavaScript动态加载 -->
+            </div>
+        </section>
+
+        <!-- 游戏列表区域 -->
+        <section class="games-section">
+            <div class="games-container" id="games-container">
+                <!-- 游戏卡片将通过JavaScript动态加载 -->
+            </div>
+        </section>
+    </main>
+
+    <!-- 返回顶部按钮 -->
+    <button class="back-to-top" id="back-to-top" data-i18n="ui.backToTop" title="Back to Top">↑</button>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <p data-i18n="ui.copyright">&copy; 2024 US Game Hub. All games are property of their respective owners.</p>
+    </footer>
+
+    <!-- 数据管理模块 -->
+    <script src="js/utils/dataValidator.js"></script>
+    <script src="js/modules/DataManager.js"></script>
+    <script src="js/modules/FilterSortManager.js"></script>
+    <script src="js/modules/AdvancedFilterUI.js"></script>
+    
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

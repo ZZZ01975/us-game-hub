@@ -1,0 +1,358 @@
+{
+  "version": "1.0",
+  "lastUpdated": "2024-01-20T10:00:00Z",
+  "games": [
+    {
+      "id": "snake-battle",
+      "title": {
+        "en": "Snake Battle",
+        "zh": "贪吃蛇大作战",
+        "es": "Batalla de Serpientes",
+        "fr": "Bataille de Serpents"
+      },
+      "description": {
+        "en": "Classic snake game where you control a snake to eat food and grow longer while avoiding walls and yourself. Simple to play, tests your reflexes.",
+        "zh": "经典的贪吃蛇游戏，控制小蛇吃食物长大，避免撞到自己和墙壁。简单易上手，考验反应速度。",
+        "es": "Juego clásico de serpiente donde controlas una serpiente para comer comida y crecer evitando paredes y a ti mismo. Fácil de jugar, prueba tus reflejos.",
+        "fr": "Jeu de serpent classique où vous contrôlez un serpent pour manger de la nourriture et grandir en évitant les murs et vous-même. Simple à jouer, teste vos réflexes."
+      },
+      "category": "arcade",
+      "categoryName": {
+        "en": "Arcade",
+        "zh": "街机",
+        "es": "Arcade",
+        "fr": "Arcade"
+      },
+      "coverImage": "https://via.placeholder.com/300x200/4CAF50/white?text=Snake",
+      "gameUrl": "games/snake/index.html",
+      "featured": true,
+      "rating": 4.5,
+      "playCount": 1250,
+      "tags": ["featured", "hot"],
+      "addedDate": "2024-01-15T00:00:00Z",
+      "lastUpdated": "2024-01-15T00:00:00Z",
+      "status": "active",
+      "metadata": {
+        "developer": "US Game Hub",
+        "version": "1.2",
+        "size": "1.8MB",
+        "controls": ["keyboard", "touch"],
+        "difficulty": "easy",
+        "minAge": 3,
+        "maxPlayers": 1,
+        "estimatedPlayTime": "5-15 minutes",
+        "languages": ["en", "zh", "es", "fr"],
+        "platform": "web",
+        "technology": "HTML5"
+      }
+    },
+    {
+      "id": "tetris-classic",
+      "title": {
+        "en": "Tetris",
+        "zh": "俄罗斯方块",
+        "es": "Tetris",
+        "fr": "Tetris"
+      },
+      "description": {
+        "en": "Classic Tetris game where you rotate and move falling blocks to clear complete lines. Timeless classic puzzle game.",
+        "zh": "经典的俄罗斯方块游戏，旋转和移动下落的方块，消除完整的行。永恒的经典益智游戏。",
+        "es": "Juego clásico de Tetris donde rotas y mueves bloques que caen para eliminar líneas completas. Juego de rompecabezas clásico atemporal.",
+        "fr": "Jeu Tetris classique où vous faites tourner et déplacez des blocs qui tombent pour effacer des lignes complètes. Jeu de puzzle classique intemporel."
+      },
+      "category": "puzzle",
+      "categoryName": {
+        "en": "Puzzle",
+        "zh": "益智",
+        "es": "Rompecabezas",
+        "fr": "Puzzle"
+      },
+      "coverImage": "https://via.placeholder.com/300x200/2196F3/white?text=Tetris",
+      "gameUrl": "games/tetris/index.html",
+      "featured": true,
+      "rating": 4.8,
+      "playCount": 2100,
+      "tags": ["featured", "hot"],
+      "addedDate": "2024-01-10T00:00:00Z",
+      "lastUpdated": "2024-01-10T00:00:00Z",
+      "status": "active",
+      "metadata": {
+        "developer": "US Game Hub",
+        "version": "2.1",
+        "size": "2.3MB",
+        "controls": ["keyboard", "touch"],
+        "difficulty": "medium",
+        "minAge": 6,
+        "maxPlayers": 1,
+        "estimatedPlayTime": "10-30 minutes",
+        "languages": ["en", "zh", "es", "fr"],
+        "platform": "web",
+        "technology": "HTML5"
+      }
+    },
+    {
+      "id": "breakout-classic",
+      "title": {
+        "en": "Breakout",
+        "zh": "打砖块",
+        "es": "Rompe Ladrillos",
+        "fr": "Casse-Briques"
+      },
+      "description": {
+        "en": "Control the paddle to bounce the ball and break all the bricks. Classic arcade game that tests hand-eye coordination.",
+        "zh": "控制挡板反弹小球，击破所有砖块。经典的街机游戏，考验手眼协调能力。",
+        "es": "Controla la paleta para rebotar la pelota y romper todos los ladrillos. Juego arcade clásico que prueba la coordinación ojo-mano.",
+        "fr": "Contrôlez la raquette pour faire rebondir la balle et casser toutes les briques. Jeu d'arcade classique qui teste la coordination œil-main."
+      },
+      "category": "arcade",
+      "categoryName": {
+        "en": "Arcade",
+        "zh": "街机",
+        "es": "Arcade",
+        "fr": "Arcade"
+      },
+      "coverImage": "https://via.placeholder.com/300x200/FF9800/white?text=Breakout",
+      "gameUrl": "games/breakout/index.html",
+      "featured": false,
+      "rating": 4.2,
+      "playCount": 890,
+      "tags": ["classic"],
+      "addedDate": "2024-01-08T00:00:00Z",
+      "lastUpdated": "2024-01-08T00:00:00Z",
+      "status": "active",
+      "metadata": {
+        "developer": "US Game Hub",
+        "version": "1.0",
+        "size": "1.5MB",
+        "controls": ["keyboard", "mouse", "touch"],
+        "difficulty": "easy",
+        "minAge": 5,
+        "maxPlayers": 1,
+        "estimatedPlayTime": "5-20 minutes",
+        "languages": ["en", "zh", "es", "fr"],
+        "platform": "web",
+        "technology": "HTML5"
+      }
+    },
+    {
+      "id": "2048-puzzle",
+      "title": {
+        "en": "2048",
+        "zh": "2048",
+        "es": "2048",
+        "fr": "2048"
+      },
+      "description": {
+        "en": "Slide number tiles to merge identical numbers with the goal of reaching 2048. Simple rules, endless fun number game.",
+        "zh": "滑动数字方块，合并相同数字，目标是达到2048。简单规则，无穷乐趣的数字游戏。",
+        "es": "Desliza fichas numéricas para fusionar números idénticos con el objetivo de alcanzar 2048. Reglas simples, juego numérico de diversión infinita.",
+        "fr": "Faites glisser les tuiles numériques pour fusionner des nombres identiques dans le but d'atteindre 2048. Règles simples, jeu numérique amusant à l'infini."
+      },
+      "category": "puzzle",
+      "categoryName": {
+        "en": "Puzzle",
+        "zh": "益智",
+        "es": "Rompecabezas",
+        "fr": "Puzzle"
+      },
+      "coverImage": "https://via.placeholder.com/300x200/9C27B0/white?text=2048",
+      "gameUrl": "games/2048/index.html",
+      "featured": true,
+      "rating": 4.6,
+      "playCount": 1680,
+      "tags": ["featured", "popular"],
+      "addedDate": "2024-01-12T00:00:00Z",
+      "lastUpdated": "2024-01-12T00:00:00Z",
+      "status": "active",
+      "metadata": {
+        "developer": "US Game Hub",
+        "version": "1.5",
+        "size": "800KB",
+        "controls": ["keyboard", "touch", "swipe"],
+        "difficulty": "medium",
+        "minAge": 8,
+        "maxPlayers": 1,
+        "estimatedPlayTime": "10-60 minutes",
+        "languages": ["en", "zh", "es", "fr"],
+        "platform": "web",
+        "technology": "HTML5"
+      }
+    },
+    {
+      "id": "plane-war",
+      "title": {
+        "en": "Plane War",
+        "zh": "飞机大战",
+        "es": "Guerra de Aviones",
+        "fr": "Guerre d'Avions"
+      },
+      "description": {
+        "en": "Pilot a fighter jet to defeat enemies while dodging bullets and enemy aircraft. Classic shooting game that tests reflexes and control skills.",
+        "zh": "驾驶战斗机击败敌人，躲避子弹和敌机。经典的射击游戏，考验反应和操作技巧。",
+        "es": "Pilota un caza para derrotar enemigos mientras esquivas balas y aviones enemigos. Juego de disparos clásico que prueba reflejos y habilidades de control.",
+        "fr": "Pilotez un avion de chasse pour vaincre les ennemis tout en esquivant les balles et les avions ennemis. Jeu de tir classique qui teste les réflexes et les compétences de contrôle."
+      },
+      "category": "action",
+      "categoryName": {
+        "en": "Action",
+        "zh": "动作",
+        "es": "Acción",
+        "fr": "Action"
+      },
+      "coverImage": "https://via.placeholder.com/300x200/F44336/white?text=Plane+War",
+      "gameUrl": "games/plane-war/index.html",
+      "featured": false,
+      "rating": 4.3,
+      "playCount": 1120,
+      "tags": ["new", "action"],
+      "addedDate": "2024-01-20T00:00:00Z",
+      "lastUpdated": "2024-01-20T00:00:00Z",
+      "status": "active",
+      "metadata": {
+        "developer": "US Game Hub",
+        "version": "1.1",
+        "size": "3.2MB",
+        "controls": ["keyboard", "touch"],
+        "difficulty": "hard",
+        "minAge": 10,
+        "maxPlayers": 1,
+        "estimatedPlayTime": "5-25 minutes",
+        "languages": ["en", "zh", "es", "fr"],
+        "platform": "web",
+        "technology": "HTML5"
+      }
+    },
+    {
+      "id": "memory-card",
+      "title": {
+        "en": "Memory Card",
+        "zh": "记忆翻牌",
+        "es": "Cartas de Memoria",
+        "fr": "Cartes Mémoire"
+      },
+      "description": {
+        "en": "Flip cards to find matching pairs of patterns. Casual puzzle game that exercises memory, suitable for all ages.",
+        "zh": "翻开卡片找到相同的图案配对。锻炼记忆力的休闲益智游戏，适合所有年龄。",
+        "es": "Voltea cartas para encontrar pares de patrones coincidentes. Juego de rompecabezas casual que ejercita la memoria, adecuado para todas las edades.",
+        "fr": "Retournez les cartes pour trouver des paires de motifs correspondants. Jeu de puzzle décontracté qui exerce la mémoire, adapté à tous les âges."
+      },
+      "category": "casual",
+      "categoryName": {
+        "en": "Casual",
+        "zh": "休闲",
+        "es": "Casual",
+        "fr": "Décontracté"
+      },
+      "coverImage": "https://via.placeholder.com/300x200/607D8B/white?text=Memory+Card",
+      "gameUrl": "games/memory-card/index.html",
+      "featured": false,
+      "rating": 4.0,
+      "playCount": 650,
+      "tags": ["family", "memory"],
+      "addedDate": "2024-01-05T00:00:00Z",
+      "lastUpdated": "2024-01-05T00:00:00Z",
+      "status": "active",
+      "metadata": {
+        "developer": "US Game Hub",
+        "version": "1.0",
+        "size": "1.2MB",
+        "controls": ["mouse", "touch"],
+        "difficulty": "easy",
+        "minAge": 4,
+        "maxPlayers": 1,
+        "estimatedPlayTime": "3-10 minutes",
+        "languages": ["en", "zh", "es", "fr"],
+        "platform": "web",
+        "technology": "HTML5"
+      }
+    },
+    {
+      "id": "jumping-ball",
+      "title": {
+        "en": "Jumping Ball",
+        "zh": "跳跃小球",
+        "es": "Pelota Saltarina",
+        "fr": "Balle Sauteuse"
+      },
+      "description": {
+        "en": "Control a ball jumping between platforms, collect coins, and avoid obstacles. Simple and fun casual game.",
+        "zh": "控制小球在平台间跳跃，收集金币，避开障碍物。简单有趣的休闲游戏。",
+        "es": "Controla una pelota saltando entre plataformas, recolecta monedas y evita obstáculos. Juego casual simple y divertido.",
+        "fr": "Contrôlez une balle sautant entre les plateformes, collectez des pièces et évitez les obstacles. Jeu décontracté simple et amusant."
+      },
+      "category": "casual",
+      "categoryName": {
+        "en": "Casual",
+        "zh": "休闲",
+        "es": "Casual",
+        "fr": "Décontracté"
+      },
+      "coverImage": "https://via.placeholder.com/300x200/795548/white?text=Jumping+Ball",
+      "gameUrl": "games/jumping-ball/index.html",
+      "featured": false,
+      "rating": 3.8,
+      "playCount": 420,
+      "tags": ["new", "platformer"],
+      "addedDate": "2024-01-18T00:00:00Z",
+      "lastUpdated": "2024-01-18T00:00:00Z",
+      "status": "active",
+      "metadata": {
+        "developer": "US Game Hub",
+        "version": "1.0",
+        "size": "2.1MB",
+        "controls": ["keyboard", "touch"],
+        "difficulty": "easy",
+        "minAge": 6,
+        "maxPlayers": 1,
+        "estimatedPlayTime": "5-15 minutes",
+        "languages": ["en", "zh", "es", "fr"],
+        "platform": "web",
+        "technology": "HTML5"
+      }
+    },
+    {
+      "id": "jigsaw-puzzle",
+      "title": {
+        "en": "Jigsaw Puzzle",
+        "zh": "拼图游戏",
+        "es": "Rompecabezas",
+        "fr": "Puzzle"
+      },
+      "description": {
+        "en": "Reassemble scrambled picture pieces back to their complete state. Classic puzzle game that exercises observation and logical thinking.",
+        "zh": "将打乱的图片拼回完整状态。经典的益智游戏，锻炼观察力和逻辑思维。",
+        "es": "Reensambla las piezas de imagen mezcladas de vuelta a su estado completo. Juego de rompecabezas clásico que ejercita la observación y el pensamiento lógico.",
+        "fr": "Rassemblez les pièces d'image mélangées pour retrouver leur état complet. Jeu de puzzle classique qui exerce l'observation et la pensée logique."
+      },
+      "category": "puzzle",
+      "categoryName": {
+        "en": "Puzzle",
+        "zh": "益智",
+        "es": "Rompecabezas",
+        "fr": "Puzzle"
+      },
+      "coverImage": "https://via.placeholder.com/300x200/009688/white?text=Jigsaw+Puzzle",
+      "gameUrl": "games/puzzle/index.html",
+      "featured": true,
+      "rating": 4.4,
+      "playCount": 980,
+      "tags": ["featured", "relaxing"],
+      "addedDate": "2024-01-14T00:00:00Z",
+      "lastUpdated": "2024-01-14T00:00:00Z",
+      "status": "active",
+      "metadata": {
+        "developer": "US Game Hub",
+        "version": "1.3",
+        "size": "2.8MB",
+        "controls": ["mouse", "touch", "drag"],
+        "difficulty": "medium",
+        "minAge": 7,
+        "maxPlayers": 1,
+        "estimatedPlayTime": "15-45 minutes",
+        "languages": ["en", "zh", "es", "fr"],
+        "platform": "web",
+        "technology": "HTML5"
+      }
+    }
+  ]
+}

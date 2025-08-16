@@ -1,0 +1,54 @@
+# GitHub Pages 配置文件
+# 用于配置Jekyll构建设置
+
+# 网站基本信息
+title: "US Game Hub"
+description: "全球小游戏平台 - 免费在线游戏"
+url: "https://yourusername.github.io"  # 替换为您的GitHub用户名
+baseurl: "/us-game-hub"  # 替换为您的仓库名
+
+# 构建设置
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+
+# 插件
+plugins:
+  - jekyll-sitemap
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# 排除文件（不包含在构建中）
+exclude:
+  - README.md
+  - CODING_STANDARDS.md
+  - scripts/
+  - tests/
+  - .github/
+  - .gitignore
+  - .kiro/
+  - node_modules/
+  - package*.json
+
+# 包含文件（确保这些文件被包含）
+include:
+  - _headers
+  - _redirects
+  - .well-known/
+
+# SEO设置
+lang: en
+author: "US Game Hub Team"
+
+# 社交媒体
+social:
+  name: "US Game Hub"
+  links:
+    - "https://github.com/yourusername/us-game-hub"
+
+# Google Analytics（可选，替换为您的跟踪ID）
+# google_analytics: "G-XXXXXXXXXX"
+
+# 安全设置
+safe: true
+incremental: false

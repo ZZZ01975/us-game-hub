@@ -1,0 +1,27 @@
+{
+  "name": "us-game-hub-tests",
+  "version": "1.0.0",
+  "description": "US Game Hub 测试套件",
+  "main": "run-tests.js",
+  "scripts": {
+    "test": "node run-tests.js",
+    "test:unit": "echo '请在浏览器中打开 tests/unit/test-runner.html 运行单元测试'",
+    "test:integration": "echo '请在浏览器中打开 tests/integration/integration-test.html 运行集成测试'",
+    "install-deps": "npm install puppeteer",
+    "setup": "npm run install-deps"
+  },
+  "keywords": [
+    "testing",
+    "javascript",
+    "game",
+    "web"
+  ],
+  "author": "US Game Hub Team",
+  "license": "MIT",
+  "devDependencies": {
+    "puppeteer": "^21.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

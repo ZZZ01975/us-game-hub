@@ -1,0 +1,72 @@
+{
+  "nav": {
+    "home": "首页",
+    "allGames": "所有游戏",
+    "action": "动作游戏",
+    "puzzle": "益智游戏",
+    "arcade": "街机游戏",
+    "casual": "休闲游戏",
+    "search": "搜索游戏...",
+    "categories": "游戏分类"
+  },
+  "ui": {
+    "playNow": "立即游玩",
+    "favorite": "收藏",
+    "share": "分享",
+    "loading": "加载中...",
+    "searchPlaceholder": "搜索游戏...",
+    "backToTop": "返回顶部",
+    "viewMore": "查看更多",
+    "recentlyPlayed": "最近游玩",
+    "favorites": "我的收藏",
+    "featuredGames": "精选游戏",
+    "newGames": "最新游戏",
+    "mostPlayed": "热门游戏",
+    "welcome": "欢迎来到 US Game Hub",
+    "subtitle": "发现并游玩最好的免费在线小游戏",
+    "copyright": "&copy; 2024 US Game Hub. 所有游戏版权归原作者所有."
+  },
+  "sections": {
+    "featured": "精选游戏",
+    "newGames": "最新游戏",
+    "mostPlayed": "热门游戏",
+    "categories": "游戏分类"
+  },
+  "categories": {
+    "all": "所有游戏",
+    "action": "动作游戏",
+    "puzzle": "益智游戏",
+    "arcade": "街机游戏",
+    "casual": "休闲游戏",
+    "sports": "体育游戏",
+    "racing": "竞速游戏",
+    "strategy": "策略游戏"
+  },
+  "gameInfo": {
+    "rating": "评分",
+    "playCount": "游玩次数",
+    "category": "分类",
+    "addedDate": "添加日期",
+    "developer": "开发者",
+    "version": "版本",
+    "controls": "操作方式"
+  },
+  "messages": {
+    "noGamesFound": "未找到游戏",
+    "loadingError": "游戏加载失败，请刷新页面。",
+    "gameLoadError": "游戏加载失败，请重试。",
+    "networkError": "网络连接错误，请检查您的网络连接。",
+    "languageChanged": "语言切换成功",
+    "languageChangeError": "语言切换失败"
+  },
+  "tags": {
+    "new": "新游戏",
+    "hot": "热门",
+    "featured": "精选"
+  },
+  "meta": {
+    "title": "US Game Hub - 免费在线游戏平台",
+    "description": "在US Game Hub畅玩免费在线游戏。享受动作、益智、街机和休闲游戏，直接在浏览器中游玩。",
+    "keywords": "免费游戏, 在线游戏, 浏览器游戏, 动作游戏, 益智游戏"
+  }
+}

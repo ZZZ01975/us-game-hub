@@ -1,0 +1,72 @@
+{
+  "nav": {
+    "home": "Home",
+    "allGames": "All Games",
+    "action": "Action",
+    "puzzle": "Puzzle",
+    "arcade": "Arcade",
+    "casual": "Casual",
+    "search": "Search games...",
+    "categories": "Game Categories"
+  },
+  "ui": {
+    "playNow": "Play Now",
+    "favorite": "Favorite",
+    "share": "Share",
+    "loading": "Loading...",
+    "searchPlaceholder": "Search games...",
+    "backToTop": "Back to Top",
+    "viewMore": "View More",
+    "recentlyPlayed": "Recently Played",
+    "favorites": "Favorites",
+    "featuredGames": "Featured Games",
+    "newGames": "New Games",
+    "mostPlayed": "Most Played",
+    "welcome": "Welcome to US Game Hub",
+    "subtitle": "Discover and play the best free online games",
+    "copyright": "&copy; 2024 US Game Hub. All games are property of their respective owners."
+  },
+  "sections": {
+    "featured": "Featured Games",
+    "newGames": "New Games",
+    "mostPlayed": "Most Played",
+    "categories": "Game Categories"
+  },
+  "categories": {
+    "all": "All Games",
+    "action": "Action",
+    "puzzle": "Puzzle", 
+    "arcade": "Arcade",
+    "casual": "Casual",
+    "sports": "Sports",
+    "racing": "Racing",
+    "strategy": "Strategy"
+  },
+  "gameInfo": {
+    "rating": "Rating",
+    "playCount": "Plays",
+    "category": "Category",
+    "addedDate": "Added",
+    "developer": "Developer",
+    "version": "Version",
+    "controls": "Controls"
+  },
+  "messages": {
+    "noGamesFound": "No games found",
+    "loadingError": "Failed to load games. Please refresh the page.",
+    "gameLoadError": "Game loading failed. Please try again.",
+    "networkError": "Network connection error. Please check your internet connection.",
+    "languageChanged": "Language changed successfully",
+    "languageChangeError": "Failed to change language"
+  },
+  "tags": {
+    "new": "NEW",
+    "hot": "HOT",
+    "featured": "FEATURED"
+  },
+  "meta": {
+    "title": "US Game Hub - Free Online Games",
+    "description": "Play free online games at US Game Hub. Enjoy action, puzzle, arcade and casual games directly in your browser.",
+    "keywords": "free games, online games, browser games, action games, puzzle games"
+  }
+}

@@ -1,0 +1,910 @@
+/**
+ * 移动端交互样式
+ * 包含触摸反馈、手势支持、移动端优化等样式
+ */
+
+/* 移动端基础变量 */
+:root {
+    --mobile-touch-feedback: rgba(255, 255, 255, 0.1);
+    --mobile-swipe-threshold: 50px;
+    --mobile-tap-highlight: rgba(102, 126, 234, 0.2);
+    --mobile-menu-width: 280px;
+    --mobile-header-height: 60px;
+    --mobile-safe-area-top: env(safe-area-inset-top, 0px);
+    --mobile-safe-area-bottom: env(safe-area-inset-bottom, 0px);
+    --mobile-safe-area-left: env(safe-area-inset-left, 0px);
+    --mobile-safe-area-right: env(safe-area-inset-right, 0px);
+}
+
+/* 移动端检测 */
+@media (max-width: 768px) and (pointer: coarse) {
+    /* 触摸反馈样式 */
+    .touch-active {
+        background-color: var(--mobile-touch-feedback) !important;
+        transform: scale(0.98);
+        transition: all 0.1s ease;
+    }
+
+    /* 快速点击反馈 */
+    .fast-click {
+        opacity: 0.8;
+        transform: scale(0.95);
+        transition: all 0.1s ease;
+    }
+
+    /* 游戏卡片触摸优化 */
+    .game-card {
+        touch-action: pan-y;
+        user-select: none;
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .game-card.touch-active {
+        transform: scale(0.98) translateZ(0);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    /* 滑动提示样式 */
+    .swipe-hint {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+        z-index: 10;
+        pointer-events: none;
+        backdrop-filter: blur(10px);
+    }
+
+    .swipe-hint.swipe-right {
+        left: 1rem;
+        background: linear-gradient(45deg, #4CAF50, #45a049);
+    }
+
+    .swipe-hint.swipe-left {
+        right: 1rem;
+        background: linear-gradient(45deg, #2196F3, #1976D2);
+    }
+
+    /* 滑动反馈样式 */
+    .swipe-feedback {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.8);
+        background: rgba(0, 0, 0, 0.9);
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 25px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        opacity: 0;
+        transition: all 0.3s ease;
+        z-index: 20;
+        pointer-events: none;
+        backdrop-filter: blur(10px);
+    }
+
+    .swipe-feedback.show {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    .swipe-feedback-success {
+        background: linear-gradient(45deg, #4CAF50, #45a049);
+    }
+
+    .swipe-feedback-info {
+        background: linear-gradient(45deg, #2196F3, #1976D2);
+    }
+
+    .swipe-feedback-warning {
+        background: linear-gradient(45deg, #FF9800, #F57C00);
+    }
+
+    /* 移动端导航优化 */
+    .header {
+        transition: transform 0.3s ease;
+        will-change: transform;
+    }
+
+    .header.nav-hidden {
+        transform: translateY(-100%);
+    }
+
+    .top-nav-container {
+        padding-top: var(--mobile-safe-area-top);
+        min-height: calc(var(--mobile-header-height) + var(--mobile-safe-area-top));
+    }
+
+    /* 移动端菜单优化 */
+    .mobile-menu-toggle {
+        position: relative;
+        z-index: 1001;
+        transition: all 0.3s ease;
+    }
+
+    .mobile-menu-toggle.active {
+        background: rgba(255, 255, 255, 0.3);
+        border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .mobile-menu-toggle.active .hamburger-line:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .mobile-menu-toggle.active .hamburger-line:nth-child(2) {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    .mobile-menu-toggle.active .hamburger-line:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -6px);
+    }
+
+    /* 移动端分类菜单优化 */
+    .mobile-category-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        height: calc(100vh - var(--mobile-safe-area-bottom));
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        touch-action: none;
+    }
+
+    .mobile-category-menu.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .mobile-category-menu::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: var(--mobile-menu-width);
+        height: 100%;
+        background: var(--bg-primary);
+        transform: translateX(100%);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .mobile-category-menu.show::before {
+        transform: translateX(0);
+    }
+
+    .mobile-menu-header {
+        position: absolute;
+        top: var(--mobile-safe-area-top);
+        right: 0;
+        width: var(--mobile-menu-width);
+        padding: 1rem;
+        background: var(--gradient-primary);
+        color: white;
+        z-index: 1001;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        min-height: var(--mobile-header-height);
+    }
+
+    .mobile-category-list {
+        position: absolute;
+        top: calc(var(--mobile-header-height) + var(--mobile-safe-area-top));
+        right: 0;
+        width: var(--mobile-menu-width);
+        height: calc(100% - var(--mobile-header-height) - var(--mobile-safe-area-top) - var(--mobile-safe-area-bottom));
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        z-index: 1001;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+    .mobile-category-link {
+        display: flex;
+        align-items: center;
+        padding: 1rem 1.5rem;
+        color: var(--text-primary);
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        border-left: 3px solid transparent;
+        position: relative;
+        touch-action: manipulation;
+    }
+
+    .mobile-category-link:hover,
+    .mobile-category-link.active {
+        background: var(--bg-secondary);
+        border-left-color: var(--primary-color);
+        color: var(--primary-color);
+    }
+
+    .mobile-category-link.touch-active {
+        background: var(--mobile-touch-feedback);
+        transform: translateX(4px);
+    }
+
+    .mobile-category-link.clicked {
+        background: var(--primary-color);
+        color: white;
+        transform: translateX(8px);
+    }
+
+    /* 下拉刷新样式 */
+    .pull-to-refresh {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 80px;
+        background: var(--gradient-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: translateY(-100%);
+        transition: transform 0.3s ease;
+        z-index: 999;
+        opacity: 0;
+    }
+
+    .pull-to-refresh-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        color: white;
+    }
+
+    .pull-icon {
+        font-size: 1.5rem;
+        transition: transform 0.3s ease;
+    }
+
+    .pull-text {
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+
+    .pull-to-refresh.ready .pull-icon {
+        transform: rotate(180deg);
+    }
+
+    .pull-to-refresh.refreshing .pull-icon {
+        animation: spin 1s linear infinite;
+    }
+
+    /* 移动端按钮优化 */
+    .btn {
+        min-height: 44px;
+        min-width: 44px;
+        touch-action: manipulation;
+        user-select: none;
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+    }
+
+    .btn.touch-active {
+        transform: scale(0.95);
+        opacity: 0.8;
+    }
+
+    /* 移动端输入框优化 */
+    .search-input {
+        font-size: 16px; /* 防止iOS缩放 */
+        touch-action: manipulation;
+    }
+
+    .search-input:focus {
+        transform: none; /* 防止输入时页面跳动 */
+    }
+
+    /* 移动端游戏卡片网格优化 */
+    .games-container {
+        padding: 0 0.5rem;
+    }
+
+    .game-card {
+        margin-bottom: 1rem;
+        border-radius: 12px;
+        overflow: hidden;
+        will-change: transform;
+    }
+
+    .game-card:active {
+        transform: scale(0.98);
+    }
+
+    /* 移动端滚动优化 */
+    .games-container,
+    .mobile-category-list {
+        -webkit-overflow-scrolling: touch;
+        scroll-behavior: smooth;
+    }
+
+    /* 移动端返回顶部按钮优化 */
+    .back-to-top {
+        bottom: calc(1rem + var(--mobile-safe-area-bottom));
+        right: 1rem;
+        width: 48px;
+        height: 48px;
+        font-size: 1.2rem;
+        touch-action: manipulation;
+    }
+
+    .back-to-top.touch-active {
+        transform: scale(0.9) translateY(-2px);
+    }
+
+    /* 移动端Toast优化 */
+    .toast-container {
+        top: calc(1rem + var(--mobile-safe-area-top));
+        right: 1rem;
+        left: 1rem;
+        max-width: none;
+    }
+
+    .toast {
+        padding: 1rem;
+        font-size: 0.9rem;
+        border-radius: 12px;
+    }
+
+    /* 移动端对话框优化 */
+    .error-dialog,
+    .confirm-dialog {
+        margin: 1rem;
+        padding: 1.5rem;
+        border-radius: 16px;
+        max-height: calc(100vh - 2rem - var(--mobile-safe-area-top) - var(--mobile-safe-area-bottom));
+        overflow-y: auto;
+    }
+
+    .error-actions,
+    .confirm-actions {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .error-actions .btn,
+    .confirm-actions .btn {
+        width: 100%;
+        min-height: 48px;
+    }
+
+    /* 移动端动画优化 */
+    .animate-on-scroll {
+        transform: translateY(20px);
+    }
+
+    /* 防止文本选择 */
+    .game-card,
+    .mobile-category-link,
+    .btn {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    /* 移动端焦点样式 */
+    .mobile-category-link:focus,
+    .btn:focus {
+        outline: 2px solid var(--primary-color);
+        outline-offset: 2px;
+    }
+
+    /* 移动端无障碍优化 */
+    .mobile-menu-toggle[aria-expanded="true"] {
+        background: rgba(255, 255, 255, 0.3);
+    }
+
+    /* 移动端性能优化 */
+    .game-card,
+    .mobile-category-menu,
+    .pull-to-refresh {
+        will-change: transform;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+    }
+
+    /* 移动端菜单打开时的body样式 */
+    body.menu-open {
+        overflow: hidden;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+    }
+
+    /* 动画暂停状态 */
+    body.animations-paused * {
+        animation-play-state: paused !important;
+        transition: none !important;
+    }
+}
+
+/* 横屏模式优化 */
+@media (max-width: 768px) and (orientation: landscape) {
+    .mobile-menu-header {
+        min-height: 50px;
+    }
+
+    .mobile-category-list {
+        top: calc(50px + var(--mobile-safe-area-top));
+        height: calc(100% - 50px - var(--mobile-safe-area-top) - var(--mobile-safe-area-bottom));
+    }
+
+    .mobile-category-link {
+        padding: 0.75rem 1.5rem;
+    }
+
+    .pull-to-refresh {
+        height: 60px;
+    }
+}
+
+/* 小屏幕设备优化 */
+@media (max-width: 480px) {
+    :root {
+        --mobile-menu-width: 260px;
+    }
+
+    .swipe-hint {
+        font-size: 0.8rem;
+        padding: 0.4rem 0.8rem;
+    }
+
+    .swipe-feedback {
+        font-size: 0.8rem;
+        padding: 0.6rem 1.2rem;
+    }
+
+    .mobile-category-link {
+        padding: 0.875rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .pull-to-refresh-content {
+        gap: 0.25rem;
+    }
+
+    .pull-icon {
+        font-size: 1.25rem;
+    }
+
+    .pull-text {
+        font-size: 0.8rem;
+    }
+}
+
+/* 高分辨率屏幕优化 */
+@media (max-width: 768px) and (-webkit-min-device-pixel-ratio: 2) {
+    .game-card {
+        border: 0.5px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .mobile-category-link {
+        border-left-width: 2px;
+    }
+}
+
+/* 深色模式移动端优化 */
+@media (max-width: 768px) and (prefers-color-scheme: dark) {
+    .swipe-hint {
+        background: rgba(255, 255, 255, 0.9);
+        color: var(--text-primary);
+    }
+
+    .swipe-feedback {
+        background: rgba(255, 255, 255, 0.95);
+        color: var(--text-primary);
+    }
+
+    .pull-to-refresh {
+        background: var(--bg-primary);
+        border-bottom: 1px solid var(--border-color);
+    }
+}
+
+/* 减少动画偏好 */
+@media (max-width: 768px) and (prefers-reduced-motion: reduce) {
+    .touch-active,
+    .fast-click,
+    .mobile-category-link,
+    .game-card,
+    .btn {
+        transition: none !important;
+        animation: none !important;
+        transform: none !important;
+    }
+
+    .mobile-category-menu,
+    .mobile-category-menu::before,
+    .pull-to-refresh {
+        transition: opacity 0.2s ease !important;
+    }
+
+    .swipe-hint,
+    .swipe-feedback {
+        transition: opacity 0.1s ease !important;
+    }
+}
+
+/* iOS Safari 特定优化 */
+@supports (-webkit-touch-callout: none) {
+    .mobile-category-menu {
+        height: 100vh;
+        height: -webkit-fill-available;
+    }
+
+    .search-input {
+        -webkit-appearance: none;
+        border-radius: 0;
+    }
+
+    .btn {
+        -webkit-appearance: none;
+    }
+}
+
+/* Android Chrome 特定优化 */
+@media (max-width: 768px) {
+    .mobile-category-menu {
+        /* Android Chrome 地址栏处理 */
+        height: 100vh;
+        height: calc(var(--vh, 1vh) * 100);
+    }
+}
+
+/* 触摸设备特定样式 */
+@media (pointer: coarse) {
+    /* 增大可点击区域 */
+    .category-link,
+    .mobile-category-link,
+    .language-option {
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+    }
+
+    /* 优化触摸反馈 */
+    .game-card:active,
+    .btn:active,
+    .mobile-category-link:active {
+        opacity: 0.8;
+    }
+}
+
+/* 悬停设备排除移动端样式 */
+@media (hover: hover) and (pointer: fine) {
+    .touch-active,
+    .fast-click {
+        background-color: transparent !important;
+        transform: none !important;
+        opacity: 1 !important;
+    }
+}
+/* 移动
+端游戏选项菜单 */
+.mobile-game-options-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.mobile-game-options-menu.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.mobile-game-options-menu.fade-out {
+    opacity: 0;
+    transform: scale(0.95);
+}
+
+.mobile-menu-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.mobile-menu-content {
+    background: var(--bg-primary);
+    border-radius: 16px 16px 0 0;
+    width: 100%;
+    max-width: 400px;
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.mobile-game-options-menu.show .mobile-menu-content {
+    transform: translateY(0);
+}
+
+.mobile-menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 1.5rem 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.mobile-menu-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.mobile-menu-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+    line-height: 1;
+}
+
+.mobile-menu-close:hover {
+    background: var(--hover-color);
+    color: var(--text-primary);
+}
+
+.mobile-menu-options {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.mobile-option-btn {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: var(--bg-secondary);
+    border: none;
+    border-radius: 12px;
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+    width: 100%;
+    min-height: 56px;
+}
+
+.mobile-option-btn:hover,
+.mobile-option-btn:focus {
+    background: var(--hover-color);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.mobile-option-btn:active {
+    transform: translateY(0);
+    background: var(--active-color);
+}
+
+.option-icon {
+    font-size: 1.25rem;
+    width: 24px;
+    text-align: center;
+}
+
+/* 移动端上下文菜单 */
+.mobile-context-menu {
+    position: fixed;
+    background: var(--bg-primary);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    z-index: 9998;
+    min-width: 160px;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.9) translateY(-10px);
+    transition: all 0.2s ease;
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color);
+}
+
+.mobile-context-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1) translateY(0);
+}
+
+.context-menu-item {
+    padding: 0.875rem 1.25rem;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+}
+
+.context-menu-item:last-child {
+    border-bottom: none;
+}
+
+.context-menu-item:hover,
+.context-menu-item:focus {
+    background: var(--hover-color);
+    color: var(--primary-color);
+}
+
+.context-menu-item:active {
+    background: var(--active-color);
+}
+
+.context-menu-separator {
+    height: 1px;
+    background: var(--border-color);
+    margin: 0.25rem 0;
+}
+
+/* 移动端特定的响应式调整 */
+@media (max-width: 480px) {
+    .mobile-menu-overlay {
+        padding: 0;
+        align-items: flex-end;
+    }
+
+    .mobile-menu-content {
+        border-radius: 16px 16px 0 0;
+        max-width: none;
+        width: 100%;
+    }
+
+    .mobile-menu-header {
+        padding: 1.25rem 1rem 0.75rem;
+    }
+
+    .mobile-menu-header h3 {
+        font-size: 1.125rem;
+    }
+
+    .mobile-menu-options {
+        padding: 0.75rem 1rem 1.5rem;
+    }
+
+    .mobile-option-btn {
+        padding: 0.875rem 1rem;
+        font-size: 0.9rem;
+        min-height: 52px;
+    }
+
+    .option-icon {
+        font-size: 1.125rem;
+        width: 20px;
+    }
+
+    .mobile-context-menu {
+        min-width: 140px;
+        border-radius: 10px;
+    }
+
+    .context-menu-item {
+        padding: 0.75rem 1rem;
+        font-size: 0.85rem;
+        min-height: 40px;
+    }
+}
+
+/* 横屏模式调整 */
+@media (max-width: 768px) and (orientation: landscape) {
+    .mobile-menu-overlay {
+        align-items: center;
+        padding: 1rem;
+    }
+
+    .mobile-menu-content {
+        border-radius: 16px;
+        max-height: 80vh;
+        overflow-y: auto;
+        transform: scale(0.9);
+    }
+
+    .mobile-game-options-menu.show .mobile-menu-content {
+        transform: scale(1);
+    }
+
+    .mobile-menu-options {
+        max-height: 60vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+/* 深色模式适配 */
+@media (prefers-color-scheme: dark) {
+    .mobile-menu-overlay {
+        background: rgba(0, 0, 0, 0.7);
+    }
+
+    .mobile-context-menu {
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    }
+}
+
+/* 高对比度模式 */
+@media (prefers-contrast: high) {
+    .mobile-option-btn,
+    .context-menu-item {
+        border: 1px solid var(--text-primary);
+    }
+
+    .mobile-menu-content,
+    .mobile-context-menu {
+        border: 2px solid var(--text-primary);
+    }
+}
+
+/* 减少动画偏好 */
+@media (prefers-reduced-motion: reduce) {
+    .mobile-game-options-menu,
+    .mobile-menu-content,
+    .mobile-context-menu,
+    .mobile-option-btn,
+    .context-menu-item {
+        transition: opacity 0.2s ease !important;
+        transform: none !important;
+    }
+
+    .mobile-game-options-menu.show .mobile-menu-content {
+        transform: none !important;
+    }
+}
+
+/* 安全区域适配 */
+@supports (padding: max(0px)) {
+    .mobile-menu-content {
+        padding-bottom: max(1rem, env(safe-area-inset-bottom));
+    }
+
+    .mobile-menu-overlay {
+        padding-bottom: max(1rem, env(safe-area-inset-bottom));
+    }
+}

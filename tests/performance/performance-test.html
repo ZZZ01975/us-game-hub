@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>US Game Hub - 性能测试</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .test-header {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .test-header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .metric-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            border-left: 4px solid #ff6b6b;
+        }
+        .metric-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .metric-label {
+            color: #666;
+            font-size: 14px;
+        }
+        .metric-description {
+            color: #888;
+            font-size: 12px;
+            margin-top: 8px;
+        }
+        .controls {
+            padding: 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+        .btn-primary {
+            background: #ff6b6b;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #ee5a24;
+        }
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        .performance-chart {
+            padding: 20px;
+            border-top: 1px solid #eee;
+        }
+        .chart-container {
+            height: 300px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+        .recommendations {
+            padding: 20px;
+            border-top: 1px solid #eee;
+        }
+        .recommendation {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+        .recommendation h4 {
+            margin: 0 0 8px 0;
+            color: #1976d2;
+        }
+        .recommendation p {
+            margin: 0;
+            color: #666;
+            font-size: 14px;
+        }
+        .status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .status-good {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status-warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+        .status-poor {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-header">
+            <h1>US Game Hub 性能测试</h1>
+            <p>监控和分析网站性能指标</p>
+        </div>
+        
+        <div class="metrics-grid" id="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value" id="load-time">-</div>
+                <div class="metric-label">页面加载时间</div>
+                <div class="metric-description">从开始导航到页面完全加载的时间</div>
+                <div class="status" id="load-time-status">测量中</div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-value" id="dom-ready">-</div>
+                <div class="metric-label">DOM就绪时间</div>
+                <div class="metric-description">DOM内容加载完成的时间</div>
+                <div class="status" id="dom-ready-status">测量中</div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-value" id="first-paint">-</div>
+                <div class="metric-label">首次绘制</div>
+                <div class="metric-description">浏览器首次渲染任何内容的时间</div>
+                <div class="status" id="first-paint-status">测量中</div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-value" id="first-contentful-paint">-</div>
+                <div class="metric-label">首次内容绘制</div>
+                <div class="metric-description">首次渲染文本或图像的时间</div>
+                <div class="status" id="fcp-status">测量中</div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-value" id="memory-usage">-</div>
+                <div class="metric-label">内存使用</div>
+                <div class="metric-description">JavaScript堆内存使用量</div>
+                <div class="status" id="memory-status">测量中</div>
+            </div>
+            
+            <div class="metric-card">
+                <div class="metric-value" id="resource-count">-</div>
+                <div class="metric-label">资源数量</div>
+                <div class="metric-description">加载的资源文件总数</div>
+                <div class="status" id="resource-status">测量中</div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button class="btn btn-primary" id="run-test-btn">运行性能测试</button>
+            <button class="btn btn-secondary" id="clear-cache-btn">清除缓存</button>
+            <button class="btn btn-secondary" id="export-report-btn">导出报告</button>
+        </div>
+        
+        <div class="performance-chart">
+            <h3>性能趋势图</h3>
+            <div class="chart-container">
+                <p>性能数据图表将在这里显示</p>
+            </div>
+        </div>
+        
+        <div class="recommendations" id="recommendations">
+            <h3>性能优化建议</h3>
+            <div id="recommendations-list">
+                <p>运行性能测试后将显示优化建议</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="performance-test.js"></script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "allGames": "Tous les Jeux",
+    "action": "Action",
+    "puzzle": "Puzzle",
+    "arcade": "Arcade",
+    "casual": "Décontracté",
+    "search": "Rechercher des jeux...",
+    "categories": "Catégories de Jeux"
+  },
+  "ui": {
+    "playNow": "Jouer Maintenant",
+    "favorite": "Favori",
+    "share": "Partager",
+    "loading": "Chargement...",
+    "searchPlaceholder": "Rechercher des jeux...",
+    "backToTop": "Retour en Haut",
+    "viewMore": "Voir Plus",
+    "recentlyPlayed": "Récemment Joués",
+    "favorites": "Favoris",
+    "featuredGames": "Jeux en Vedette",
+    "newGames": "Nouveaux Jeux",
+    "mostPlayed": "Les Plus Joués",
+    "welcome": "Bienvenue sur US Game Hub",
+    "subtitle": "Découvrez et jouez aux meilleurs jeux gratuits en ligne",
+    "copyright": "&copy; 2024 US Game Hub. Tous les jeux sont la propriété de leurs propriétaires respectifs."
+  },
+  "sections": {
+    "featured": "Jeux en Vedette",
+    "newGames": "Nouveaux Jeux",
+    "mostPlayed": "Les Plus Joués",
+    "categories": "Catégories de Jeux"
+  },
+  "categories": {
+    "all": "Tous les Jeux",
+    "action": "Action",
+    "puzzle": "Puzzle",
+    "arcade": "Arcade",
+    "casual": "Décontracté",
+    "sports": "Sports",
+    "racing": "Course",
+    "strategy": "Stratégie"
+  },
+  "gameInfo": {
+    "rating": "Note",
+    "playCount": "Parties",
+    "category": "Catégorie",
+    "addedDate": "Ajouté",
+    "developer": "Développeur",
+    "version": "Version",
+    "controls": "Contrôles"
+  },
+  "messages": {
+    "noGamesFound": "Aucun jeu trouvé",
+    "loadingError": "Échec du chargement des jeux. Veuillez actualiser la page.",
+    "gameLoadError": "Échec du chargement du jeu. Veuillez réessayer.",
+    "networkError": "Erreur de connexion réseau. Veuillez vérifier votre connexion internet.",
+    "languageChanged": "Langue changée avec succès",
+    "languageChangeError": "Échec du changement de langue"
+  },
+  "tags": {
+    "new": "NOUVEAU",
+    "hot": "POPULAIRE",
+    "featured": "EN VEDETTE"
+  },
+  "meta": {
+    "title": "US Game Hub - Jeux Gratuits en Ligne",
+    "description": "Jouez à des jeux gratuits en ligne sur US Game Hub. Profitez de jeux d'action, de puzzle, d'arcade et décontractés directement dans votre navigateur.",
+    "keywords": "jeux gratuits, jeux en ligne, jeux de navigateur, jeux d'action, jeux de puzzle"
+  }
+}

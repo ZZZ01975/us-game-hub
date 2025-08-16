@@ -1,0 +1,613 @@
+/**
+ * 交互体验组件样式
+ * 包含加载动画、过渡效果、错误提示等样式
+ */
+
+/* 页面加载遮罩 */
+.page-loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.page-loading-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.page-loading-overlay.fade-out {
+    opacity: 0;
+    transform: scale(1.1);
+}
+
+.loading-content {
+    text-align: center;
+    color: white;
+    max-width: 300px;
+}
+
+.loading-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.logo-icon {
+    font-size: 2rem;
+    animation: bounce 2s infinite;
+}
+
+.logo-text {
+    opacity: 0.9;
+}
+
+.loading-spinner-container {
+    position: relative;
+    margin-bottom: 1.5rem;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top: 3px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.loading-dots {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 0.5rem;
+}
+
+.loading-dots span {
+    width: 8px;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+.loading-dots span:nth-child(1) { animation-delay: 0s; }
+.loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+.loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+.loading-text {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    opacity: 0.9;
+}
+
+.loading-progress {
+    width: 100%;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #fff, rgba(255, 255, 255, 0.8));
+    border-radius: 2px;
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+/* Toast通知 */
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9998;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-width: 400px;
+}
+
+.toast {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    background: var(--card-background);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    transform: translateX(100%);
+    opacity: 0;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.toast.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+.toast.fade-out {
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+.toast::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--primary-color);
+}
+
+.toast-success::before { background: #4CAF50; }
+.toast-error::before { background: #f44336; }
+.toast-warning::before { background: #FF9800; }
+.toast-info::before { background: #2196F3; }
+
+.toast-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+}
+
+.toast-message {
+    flex: 1;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    color: var(--text-primary);
+}
+
+.toast-close {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+.toast-close:hover {
+    background: var(--hover-color);
+    color: var(--text-primary);
+}
+
+/* 错误对话框 */
+.error-dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 9997;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.error-dialog-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.error-dialog {
+    background: var(--card-background);
+    border-radius: 16px;
+    padding: 2rem;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    transform: scale(0.9) translateY(20px);
+    transition: all 0.3s ease;
+}
+
+.error-dialog-overlay.show .error-dialog {
+    transform: scale(1) translateY(0);
+}
+
+.error-dialog-content {
+    text-align: center;
+}
+
+.error-icon {
+    margin-bottom: 1.5rem;
+}
+
+.error-icon-circle {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    font-size: 2rem;
+    animation: pulse 2s infinite;
+}
+
+.error-info {
+    margin-bottom: 2rem;
+}
+
+.error-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.error-message {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0;
+}
+
+.error-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.error-actions .btn {
+    min-width: 100px;
+}
+
+/* 确认对话框 */
+.confirm-dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 9996;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.confirm-dialog-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.confirm-dialog {
+    background: var(--card-background);
+    border-radius: 16px;
+    padding: 2rem;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    transform: scale(0.9) translateY(20px);
+    transition: all 0.3s ease;
+}
+
+.confirm-dialog-overlay.show .confirm-dialog {
+    transform: scale(1) translateY(0);
+}
+
+.confirm-dialog-content {
+    text-align: center;
+}
+
+.confirm-icon {
+    margin-bottom: 1rem;
+    font-size: 3rem;
+}
+
+.confirm-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.confirm-message {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+}
+
+.confirm-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+/* 元素加载状态 */
+.element-loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(2px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    border-radius: inherit;
+}
+
+.element-loading-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.element-loading-content .loading-spinner {
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--border-color);
+    border-top: 2px solid var(--primary-color);
+}
+
+.loading-message {
+    font-size: 0.9rem;
+}
+
+/* 返回顶部按钮增强 */
+.back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 50px;
+    height: 50px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    z-index: 1000;
+}
+
+.back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.back-to-top:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+}
+
+.back-to-top:active {
+    transform: translateY(0);
+}
+
+/* 页面过渡效果 */
+.page-exit {
+    opacity: 0;
+    transform: scale(0.98);
+    transition: all 0.3s ease;
+}
+
+/* 滚动动画 */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+}
+
+.animate-on-scroll.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 导航栏滚动效果 */
+.scroll-down .header {
+    transform: translateY(-100%);
+    transition: transform 0.3s ease;
+}
+
+.scroll-up .header {
+    transform: translateY(0);
+    transition: transform 0.3s ease;
+}
+
+/* 动画关键帧 */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.4;
+        transform: scale(0.8);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .toast-container {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
+    }
+    
+    .toast {
+        padding: 0.75rem 1rem;
+    }
+    
+    .error-dialog,
+    .confirm-dialog {
+        padding: 1.5rem;
+        margin: 1rem;
+    }
+    
+    .error-actions,
+    .confirm-actions {
+        flex-direction: column;
+    }
+    
+    .error-actions .btn,
+    .confirm-actions .btn {
+        width: 100%;
+    }
+    
+    .back-to-top {
+        bottom: 1rem;
+        right: 1rem;
+        width: 45px;
+        height: 45px;
+        font-size: 1.1rem;
+    }
+    
+    .loading-content {
+        padding: 0 1rem;
+    }
+    
+    .loading-logo {
+        font-size: 1.25rem;
+    }
+    
+    .logo-icon {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .error-icon-circle {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+    
+    .error-title {
+        font-size: 1.25rem;
+    }
+    
+    .confirm-icon {
+        font-size: 2.5rem;
+    }
+    
+    .confirm-title {
+        font-size: 1.1rem;
+    }
+    
+    .toast {
+        padding: 0.75rem;
+        font-size: 0.85rem;
+    }
+}
+
+/* 深色模式适配 */
+@media (prefers-color-scheme: dark) {
+    .element-loading-overlay {
+        background: rgba(0, 0, 0, 0.8);
+    }
+    
+    .page-loading-overlay {
+        background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    }
+}
+
+/* 减少动画（用户偏好） */
+@media (prefers-reduced-motion: reduce) {
+    .animate-on-scroll,
+    .page-exit,
+    .toast,
+    .error-dialog,
+    .confirm-dialog,
+    .back-to-top {
+        transition: none;
+        animation: none;
+    }
+    
+    .loading-spinner,
+    .logo-icon,
+    .error-icon-circle {
+        animation: none;
+    }
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>游戏详情 - US Game Hub</title>
+    <meta name="description" content="在US Game Hub上游玩精彩的小游戏">
+    <link rel="stylesheet" href="css/game.css">
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <a href="index.html">🎮 US Game Hub</a>
+            </div>
+            <div class="nav-actions">
+                <a href="index.html" class="btn-back">
+                    <span>←</span>
+                    <span>返回首页</span>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- 游戏详情内容 -->
+    <main class="game-detail">
+        <!-- 游戏信息展示区域 -->
+        <section class="game-info-section">
+            <div class="game-info" id="game-info">
+                <!-- 游戏信息将通过JavaScript动态加载 -->
+                <div class="game-loading">
+                    <div class="loading-spinner"></div>
+                    <h3>正在加载游戏信息...</h3>
+                    <p>请稍候，正在为您获取游戏详情</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 游戏播放区域 -->
+        <section class="game-play-section">
+            <div class="game-container" id="game-container">
+                <!-- 游戏将在这里加载 -->
+                <div class="game-placeholder">
+                    <div class="placeholder-icon">🎮</div>
+                    <h3>准备开始游戏</h3>
+                    <p>点击上方的"开始游戏"按钮来启动游戏</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 推荐游戏区域 -->
+        <section class="recommended-games-section">
+            <div class="recommended-games">
+                <div class="recommended-header">
+                    <h3>
+                        <span class="section-icon">🎯</span>
+                        推荐游戏
+                    </h3>
+                    <div class="recommended-filters" id="recommended-filters">
+                        <button class="filter-btn active" data-filter="mixed">智能推荐</button>
+                        <button class="filter-btn" data-filter="category">同类游戏</button>
+                        <button class="filter-btn" data-filter="popular">热门游戏</button>
+                        <button class="filter-btn" data-filter="new">最新游戏</button>
+                    </div>
+                </div>
+                <div class="recommended-list" id="recommended-list">
+                    <!-- 推荐游戏将通过JavaScript动态加载 -->
+                    <div class="recommended-loading">
+                        <div class="loading-spinner"></div>
+                        <p>正在加载推荐游戏...</p>
+                    </div>
+                </div>
+                <div class="recommended-actions">
+                    <button class="btn btn-ghost" id="load-more-recommended" style="display: none;">
+                        <span>📋</span>
+                        <span>查看更多游戏</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 返回顶部按钮 -->
+    <button class="back-to-top" id="back-to-top">↑</button>
+
+    <script type="module" src="js/game.js"></script>
+</body>
+</html>

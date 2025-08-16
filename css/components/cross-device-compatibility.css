@@ -1,0 +1,697 @@
+/**
+ * 跨设备兼容性样式
+ * 处理不同浏览器、设备和屏幕尺寸的兼容性问题
+ */
+
+/* 基础兼容性重置 */
+* {
+    box-sizing: border-box;
+}
+
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* 浏览器特定修复 */
+
+/* Safari 修复 */
+.browser-safari .safari-flexbox-fix {
+    /* 修复 Safari 的 flexbox bug */
+}
+
+.browser-safari .safari-flexbox-fix .flex-container {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.browser-safari .safari-sticky-fix .sticky-element {
+    position: -webkit-sticky;
+    position: sticky;
+}
+
+/* Firefox 修复 */
+.browser-firefox .firefox-scrollbar-fix {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) var(--bg-secondary);
+}
+
+.browser-firefox .firefox-scrollbar-fix::-webkit-scrollbar {
+    display: none; /* Firefox 不需要 webkit 滚动条样式 */
+}
+
+/* IE 修复 */
+.browser-ie {
+    /* IE 特定样式 */
+}
+
+.ie-warning {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #ff6b6b;
+    color: white;
+    z-index: 10000;
+    padding: 1rem;
+    text-align: center;
+}
+
+.ie-warning-content h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.1rem;
+}
+
+.ie-warning-content p {
+    margin: 0.25rem 0;
+    font-size: 0.9rem;
+}
+
+.ie-warning-content button {
+    background: white;
+    color: #ff6b6b;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 0.5rem;
+}
+
+/* Edge Legacy 修复 */
+.browser-edge.edge-legacy-fix {
+    /* 旧版 Edge 特定修复 */
+}
+
+/* 设备特定修复 */
+
+/* iOS 修复 */
+.os-ios.ios-scroll-fix {
+    -webkit-overflow-scrolling: touch;
+}
+
+.os-ios.ios-scroll-fix .scrollable {
+    -webkit-overflow-scrolling: touch;
+    overflow-scrolling: touch;
+}
+
+.os-ios input,
+.os-ios textarea,
+.os-ios select {
+    font-size: 16px; /* 防止 iOS 缩放 */
+    border-radius: 0; /* 移除 iOS 默认圆角 */
+    -webkit-appearance: none;
+}
+
+.os-ios .game-card {
+    /* iOS 性能优化 */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+/* Android 修复 */
+.os-android.android-performance-fix {
+    /* Android 性能优化 */
+}
+
+.os-android.android-performance-fix .game-card {
+    will-change: transform;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+}
+
+.os-android input,
+.os-android textarea {
+    /* Android 输入框优化 */
+    -webkit-user-select: text;
+    user-select: text;
+}
+
+/* 设备类型样式 */
+
+/* 移动设备 */
+.device-mobile {
+    /* 移动设备特定样式 */
+}
+
+.device-mobile .games-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+    padding: 0.5rem;
+}
+
+.device-mobile .game-card {
+    min-height: 200px;
+}
+
+.device-mobile .header {
+    position: sticky;
+    top: 0;
+}
+
+/* 平板设备 */
+.device-tablet {
+    /* 平板设备特定样式 */
+}
+
+.device-tablet .games-container {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.device-tablet .game-card {
+    min-height: 250px;
+}
+
+/* 桌面设备 */
+.device-desktop {
+    /* 桌面设备特定样式 */
+}
+
+.device-desktop .games-container {
+    grid-template-columns: repeat(8, 1fr);
+    gap: 1.5rem;
+    padding: 1.5rem;
+}
+
+.device-desktop .game-card {
+    min-height: 300px;
+}
+
+/* 功能支持样式 */
+
+/* CSS Grid 支持 */
+.supports-css-grid .games-container {
+    display: grid;
+}
+
+.no-css-grid .games-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.no-css-grid .game-card {
+    flex: 1 1 calc(25% - 1rem);
+    margin: 0.5rem;
+}
+
+/* Flexbox 支持 */
+.supports-css-flexbox .flex-container {
+    display: flex;
+}
+
+.no-css-flexbox .flex-container {
+    display: block;
+}
+
+.no-css-flexbox .flex-container > * {
+    display: inline-block;
+    vertical-align: top;
+}
+
+/* CSS 自定义属性支持 */
+.no-css-custom-properties {
+    /* 为不支持 CSS 变量的浏览器提供备用值 */
+    --primary-color: #667eea;
+    --secondary-color: #764ba2;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+}
+
+/* Backdrop Filter 支持 */
+.supports-css-backdrop-filter .backdrop-blur {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.no-css-backdrop-filter .backdrop-blur {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+/* Intersection Observer 支持 */
+.no-intersection-observer .lazy-load {
+    /* 立即加载图片 */
+    opacity: 1;
+}
+
+/* 性能优化样式 */
+
+/* 低内存设备 */
+.low-memory-device.reduce-animations * {
+    animation-duration: 0.1s !important;
+    transition-duration: 0.1s !important;
+}
+
+.low-memory-device.reduce-image-quality img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+.low-memory-device.lazy-load-aggressive img {
+    loading: lazy;
+}
+
+/* 低CPU设备 */
+.low-cpu-device.reduce-complex-animations .complex-animation {
+    animation: none !important;
+    transform: none !important;
+}
+
+.low-cpu-device.reduce-concurrent-requests {
+    /* 限制并发请求的样式调整 */
+}
+
+/* 慢网络优化 */
+.connection-slow-2g.prioritize-critical-resources,
+.connection-2g.prioritize-critical-resources {
+    /* 优先加载关键资源 */
+}
+
+.connection-slow-2g.compress-images img,
+.connection-2g.compress-images img {
+    /* 使用压缩图片 */
+}
+
+.connection-slow-2g.defer-non-critical .non-critical,
+.connection-2g.defer-non-critical .non-critical {
+    display: none;
+}
+
+/* 节省数据模式 */
+.disable-autoplay video,
+.disable-autoplay audio {
+    autoplay: none;
+}
+
+.use-low-quality-images img {
+    /* 使用低质量图片 */
+}
+
+.reduce-preloading link[rel="preload"] {
+    /* 减少预加载 */
+}
+
+/* 网络状态样式 */
+.offline {
+    /* 离线状态样式 */
+}
+
+.offline::before {
+    content: "您当前处于离线状态";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #ff9800;
+    color: white;
+    text-align: center;
+    padding: 0.5rem;
+    z-index: 9999;
+    font-size: 0.9rem;
+}
+
+.online {
+    /* 在线状态样式 */
+}
+
+/* 页面可见性样式 */
+.page-hidden {
+    /* 页面隐藏时的样式 */
+}
+
+.page-hidden * {
+    animation-play-state: paused !important;
+}
+
+/* 视口相关样式 */
+.keyboard-open {
+    /* 软键盘打开时的样式 */
+}
+
+.keyboard-open .fixed-bottom {
+    bottom: var(--keyboard-height, 0px);
+}
+
+/* 屏幕方向样式 */
+@media (orientation: portrait) {
+    .portrait-only {
+        display: block;
+    }
+    
+    .landscape-only {
+        display: none;
+    }
+}
+
+@media (orientation: landscape) {
+    .portrait-only {
+        display: none;
+    }
+    
+    .landscape-only {
+        display: block;
+    }
+}
+
+/* 高分辨率屏幕优化 */
+@media (-webkit-min-device-pixel-ratio: 2),
+       (min-resolution: 192dpi) {
+    .high-dpi img {
+        /* 高分辨率图片 */
+    }
+}
+
+/* 触摸设备样式 */
+@media (pointer: coarse) {
+    /* 触摸设备特定样式 */
+    .touch-target {
+        min-height: 44px;
+        min-width: 44px;
+    }
+    
+    .game-card {
+        cursor: pointer;
+    }
+    
+    .btn {
+        min-height: 44px;
+        padding: 0.75rem 1.5rem;
+    }
+}
+
+/* 精确指针设备样式 */
+@media (pointer: fine) {
+    /* 鼠标/触控板设备特定样式 */
+    .hover-effect:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+}
+
+/* 悬停支持样式 */
+@media (hover: hover) {
+    .game-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .btn:hover {
+        background-color: var(--primary-hover);
+    }
+}
+
+@media (hover: none) {
+    /* 不支持悬停的设备 */
+    .game-card:active {
+        transform: scale(0.98);
+    }
+    
+    .btn:active {
+        background-color: var(--primary-active);
+    }
+}
+
+/* 颜色偏好样式 */
+@media (prefers-color-scheme: dark) {
+    .auto-dark-mode {
+        background-color: #1a1a1a;
+        color: #ffffff;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    .auto-light-mode {
+        background-color: #ffffff;
+        color: #333333;
+    }
+}
+
+/* 对比度偏好样式 */
+@media (prefers-contrast: high) {
+    .high-contrast {
+        border: 2px solid currentColor;
+    }
+    
+    .game-card {
+        border: 1px solid #000000;
+    }
+    
+    .btn {
+        border: 2px solid currentColor;
+    }
+}
+
+/* 减少动画偏好样式 */
+@media (prefers-reduced-motion: reduce) {
+    .reduce-motion * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .reduce-motion .parallax {
+        transform: none !important;
+    }
+}
+
+/* 透明度偏好样式 */
+@media (prefers-reduced-transparency: reduce) {
+    .reduce-transparency {
+        backdrop-filter: none !important;
+        background: solid !important;
+    }
+}
+
+/* 打印样式 */
+@media print {
+    .no-print {
+        display: none !important;
+    }
+    
+    .print-only {
+        display: block !important;
+    }
+    
+    .game-card {
+        break-inside: avoid;
+        border: 1px solid #000;
+        margin-bottom: 1rem;
+    }
+    
+    .header,
+    .footer,
+    .back-to-top {
+        display: none !important;
+    }
+    
+    body {
+        font-size: 12pt;
+        line-height: 1.4;
+    }
+    
+    h1, h2, h3 {
+        page-break-after: avoid;
+    }
+}
+
+/* 特定屏幕尺寸修复 */
+
+/* 超小屏幕 (≤320px) */
+@media (max-width: 320px) {
+    .ultra-small-screen .games-container {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+        padding: 0.25rem;
+    }
+    
+    .ultra-small-screen .game-card {
+        min-height: 150px;
+    }
+    
+    .ultra-small-screen .header {
+        padding: 0.5rem;
+    }
+    
+    .ultra-small-screen .btn {
+        font-size: 0.8rem;
+        padding: 0.5rem 1rem;
+    }
+}
+
+/* 超大屏幕 (≥2560px) */
+@media (min-width: 2560px) {
+    .ultra-large-screen .games-container {
+        grid-template-columns: repeat(12, 1fr);
+        max-width: 2400px;
+        margin: 0 auto;
+    }
+    
+    .ultra-large-screen .game-card {
+        min-height: 350px;
+    }
+    
+    .ultra-large-screen .main-content {
+        max-width: 2400px;
+        margin: 0 auto;
+    }
+}
+
+/* 特殊宽高比处理 */
+@media (aspect-ratio: 1/1) {
+    /* 正方形屏幕 */
+    .square-screen .games-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (aspect-ratio > 2/1) {
+    /* 超宽屏 */
+    .ultra-wide-screen .games-container {
+        grid-template-columns: repeat(10, 1fr);
+    }
+    
+    .ultra-wide-screen .header {
+        padding: 1rem 2rem;
+    }
+}
+
+/* 可折叠设备支持 */
+@media (spanning: single-fold-vertical) {
+    .foldable-vertical {
+        /* 垂直折叠屏幕样式 */
+    }
+}
+
+@media (spanning: single-fold-horizontal) {
+    .foldable-horizontal {
+        /* 水平折叠屏幕样式 */
+    }
+}
+
+/* 环境变量支持 (安全区域) */
+@supports (padding: max(0px)) {
+    .safe-area-padding {
+        padding-top: max(1rem, env(safe-area-inset-top));
+        padding-bottom: max(1rem, env(safe-area-inset-bottom));
+        padding-left: max(1rem, env(safe-area-inset-left));
+        padding-right: max(1rem, env(safe-area-inset-right));
+    }
+    
+    .header {
+        padding-top: max(1rem, env(safe-area-inset-top));
+    }
+    
+    .back-to-top {
+        bottom: max(1rem, env(safe-area-inset-bottom));
+        right: max(1rem, env(safe-area-inset-right));
+    }
+}
+
+/* 容器查询支持 (未来功能) */
+@supports (container-type: inline-size) {
+    .container-query-support {
+        container-type: inline-size;
+    }
+}
+
+/* 级联层支持 */
+@supports (at-rule(@layer)) {
+    @layer compatibility {
+        /* 兼容性样式层 */
+    }
+}
+
+/* 子网格支持 */
+@supports (grid-template-rows: subgrid) {
+    .subgrid-support .game-card {
+        display: grid;
+        grid-template-rows: subgrid;
+    }
+}
+
+/* 逻辑属性支持 */
+@supports (margin-inline-start: 0) {
+    .logical-properties {
+        margin-inline-start: 1rem;
+        margin-inline-end: 1rem;
+        padding-block-start: 1rem;
+        padding-block-end: 1rem;
+    }
+}
+
+/* 颜色函数支持 */
+@supports (color: color(display-p3 1 0 0)) {
+    .wide-gamut-colors {
+        color: color(display-p3 1 0 0);
+    }
+}
+
+/* 滚动行为支持 */
+@supports (scroll-behavior: smooth) {
+    .smooth-scroll {
+        scroll-behavior: smooth;
+    }
+}
+
+/* 粘性定位支持 */
+@supports (position: sticky) {
+    .sticky-support .header {
+        position: sticky;
+        top: 0;
+    }
+}
+
+/* 网格间隙支持 */
+@supports (gap: 1rem) {
+    .gap-support .games-container {
+        gap: 1rem;
+    }
+}
+
+@supports not (gap: 1rem) {
+    .no-gap-support .game-card {
+        margin: 0.5rem;
+    }
+}
+
+/* 变换支持 */
+@supports (transform: translateZ(0)) {
+    .transform-support .game-card {
+        transform: translateZ(0);
+    }
+}
+
+/* 滤镜支持 */
+@supports (filter: blur(10px)) {
+    .filter-support .backdrop-blur {
+        filter: blur(10px);
+    }
+}
+
+/* 混合模式支持 */
+@supports (mix-blend-mode: multiply) {
+    .blend-mode-support .overlay {
+        mix-blend-mode: multiply;
+    }
+}
+
+/* 剪切路径支持 */
+@supports (clip-path: circle(50%)) {
+    .clip-path-support .circular {
+        clip-path: circle(50%);
+    }
+}
+
+/* 形状支持 */
+@supports (shape-outside: circle(50%)) {
+    .shape-support .float-shape {
+        shape-outside: circle(50%);
+    }
+}
