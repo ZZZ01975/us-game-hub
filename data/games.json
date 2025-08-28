@@ -353,6 +353,138 @@
         "platform": "web",
         "technology": "HTML5"
       }
+    },
+    {
+      "id": "flappy-bird",
+      "title": {
+        "en": "Flappy Bird",
+        "zh": "飞扬小鸟",
+        "es": "Pájaro Volador",
+        "fr": "Oiseau Volant"
+      },
+      "description": {
+        "en": "Guide a bird through pipes by tapping to make it fly. Simple one-touch game that's challenging and addictive.",
+        "zh": "点击让小鸟飞翔，穿越管道障碍。简单的单点触控游戏，具有挑战性且容易上瘾。",
+        "es": "Guía un pájaro a través de tuberías tocando para hacerlo volar. Juego simple de un toque que es desafiante y adictivo.",
+        "fr": "Guidez un oiseau à travers des tuyaux en tapotant pour le faire voler. Jeu simple à une touche qui est stimulant et addictif."
+      },
+      "category": "arcade",
+      "categoryName": {
+        "en": "Arcade",
+        "zh": "街机",
+        "es": "Arcade",
+        "fr": "Arcade"
+      },
+      "coverImage": "https://via.placeholder.com/300x200/87CEEB/white?text=Flappy+Bird",
+      "gameUrl": "games/flappy-bird/index.html",
+      "featured": true,
+      "rating": 4.7,
+      "playCount": 2850,
+      "tags": ["featured", "viral", "trending"],
+      "addedDate": "2025-01-28T00:00:00Z",
+      "lastUpdated": "2025-01-28T00:00:00Z",
+      "status": "active",
+      "metadata": {
+        "developer": "US Game Hub",
+        "version": "1.0",
+        "size": "1.2MB",
+        "controls": ["mouse", "touch", "keyboard"],
+        "difficulty": "hard",
+        "minAge": 6,
+        "maxPlayers": 1,
+        "estimatedPlayTime": "2-10 minutes",
+        "languages": ["en", "zh", "es", "fr"],
+        "platform": "web",
+        "technology": "HTML5"
+      }
+    },
+    {
+      "id": "pac-man",
+      "title": {
+        "en": "Pac-Man",
+        "zh": "吃豆人",
+        "es": "Pac-Man",
+        "fr": "Pac-Man"
+      },
+      "description": {
+        "en": "Navigate a maze eating dots while avoiding ghosts. Classic arcade game that defined a generation of gaming.",
+        "zh": "在迷宫中吃豆子，同时避开幽灵。定义了一代游戏的经典街机游戏。",
+        "es": "Navega por un laberinto comiendo puntos mientras evitas fantasmas. Juego de arcade clásico que definió una generación de juegos.",
+        "fr": "Naviguez dans un labyrinthe en mangeant des points tout en évitant les fantômes. Jeu d'arcade classique qui a défini une génération de jeux."
+      },
+      "category": "arcade",
+      "categoryName": {
+        "en": "Arcade",
+        "zh": "街机",
+        "es": "Arcade",
+        "fr": "Arcade"
+      },
+      "coverImage": "https://via.placeholder.com/300x200/FFFF00/black?text=PAC-MAN",
+      "gameUrl": "games/pac-man/index.html",
+      "featured": true,
+      "rating": 4.9,
+      "playCount": 3420,
+      "tags": ["featured", "classic", "retro"],
+      "addedDate": "2025-01-28T00:00:00Z",
+      "lastUpdated": "2025-01-28T00:00:00Z",
+      "status": "active",
+      "metadata": {
+        "developer": "US Game Hub",
+        "version": "1.0",
+        "size": "1.8MB",
+        "controls": ["keyboard"],
+        "difficulty": "medium",
+        "minAge": 8,
+        "maxPlayers": 1,
+        "estimatedPlayTime": "10-30 minutes",
+        "languages": ["en", "zh", "es", "fr"],
+        "platform": "web",
+        "technology": "HTML5"
+      }
+    },
+    {
+      "id": "space-invaders",
+      "title": {
+        "en": "Space Invaders",
+        "zh": "太空入侵者",
+        "es": "Invasores del Espacio",
+        "fr": "Envahisseurs de l'Espace"
+      },
+      "description": {
+        "en": "Defend Earth from waves of alien invaders. Move your ship and shoot to destroy all enemies before they reach you.",
+        "zh": "保卫地球免受外星入侵者的攻击。移动你的飞船并射击，在敌人到达你之前消灭所有敌人。",
+        "es": "Defiende la Tierra de oleadas de invasores alienígenas. Mueve tu nave y dispara para destruir a todos los enemigos antes de que te alcancen.",
+        "fr": "Défendez la Terre contre des vagues d'envahisseurs extraterrestres. Bougez votre vaisseau et tirez pour détruire tous les ennemis avant qu'ils ne vous atteignent."
+      },
+      "category": "action",
+      "categoryName": {
+        "en": "Action",
+        "zh": "动作",
+        "es": "Acción",
+        "fr": "Action"
+      },
+      "coverImage": "https://via.placeholder.com/300x200/000428/00FF00?text=SPACE+INVADERS",
+      "gameUrl": "games/space-invaders/index.html",
+      "featured": true,
+      "rating": 4.8,
+      "playCount": 2950,
+      "tags": ["featured", "retro", "shooter"],
+      "addedDate": "2025-01-28T00:00:00Z",
+      "lastUpdated": "2025-01-28T00:00:00Z",
+      "status": "active",
+      "metadata": {
+        "developer": "US Game Hub",
+        "version": "1.0",
+        "size": "2.1MB",
+        "controls": ["keyboard"],
+        "difficulty": "medium",
+        "minAge": 10,
+        "maxPlayers": 1,
+        "estimatedPlayTime": "5-20 minutes",
+        "languages": ["en", "zh", "es", "fr"],
+        "platform": "web",
+        "technology": "HTML5"
+      }
     }
   ]
 }

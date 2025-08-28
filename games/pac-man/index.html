@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pac-Man - 吃豆人</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #000;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        #gameContainer {
+            position: relative;
+            background: #000;
+            border: 3px solid #0000FF;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,0,255,0.3);
+        }
+
+        #gameCanvas {
+            display: block;
+            background: #000;
+        }
+
+        #gameUI {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        #gameInfo {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #FFFF00;
+            font-size: 18px;
+            font-weight: bold;
+            pointer-events: none;
+        }
+
+        #score {
+            color: #FFFF00;
+        }
+
+        #lives {
+            color: #FFFF00;
+        }
+
+        #startScreen, #gameOverScreen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0,0,0,0.8);
+            color: #FFFF00;
+            text-align: center;
+            pointer-events: all;
+        }
+
+        #startScreen h1, #gameOverScreen h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(255,255,0,0.5);
+        }
+
+        #startScreen p, #gameOverScreen p {
+            font-size: 16px;
+            margin-bottom: 30px;
+            max-width: 350px;
+            line-height: 1.6;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 18px;
+            background: #FFFF00;
+            color: #000;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 10px;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #FFD700;
+            transform: scale(1.05);
+        }
+
+        #gameOverScreen button {
+            background: #FF6347;
+            color: white;
+        }
+
+        #gameOverScreen button:hover {
+            background: #FF4500;
+        }
+
+        #finalScore {
+            font-size: 24px;
+            margin: 20px 0;
+            color: #FFFF00;
+        }
+
+        #controls {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #FFFF00;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        @media (max-width: 480px) {
+            #gameContainer {
+                border-radius: 0;
+                border: none;
+            }
+            
+            #startScreen h1, #gameOverScreen h1 {
+                font-size: 36px;
+            }
+            
+            #gameInfo {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <canvas id="gameCanvas" width="500" height="550"></canvas>
+        <div id="gameUI">
+            <div id="gameInfo">
+                <div id="score">得分: 0</div>
+                <div id="lives">生命: ♥♥♥</div>
+            </div>
+            
+            <div id="startScreen">
+                <h1>🟡 PAC-MAN</h1>
+                <p>使用方向键或WASD控制吃豆人移动<br>吃掉所有豆子并避开幽灵！</p>
+                <button onclick="startGame()">开始游戏</button>
+            </div>
+            
+            <div id="gameOverScreen" style="display: none;">
+                <h1>游戏结束</h1>
+                <div id="finalScore">最终得分: 0</div>
+                <button onclick="restartGame()">重新开始</button>
+                <button onclick="showStartScreen()">返回首页</button>
+            </div>
+            
+            <div id="controls">
+                方向键 或 WASD 移动
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const startScreen = document.getElementById('startScreen');
+        const gameOverScreen = document.getElementById('gameOverScreen');
+        const scoreElement = document.getElementById('score');
+        const livesElement = document.getElementById('lives');
+        const finalScoreElement = document.getElementById('finalScore');
+
+        // 游戏状态
+        let gameState = 'start';
+        let score = 0;
+        let lives = 3;
+        let gameLoop;
+
+        // 网格设置
+        const gridSize = 25;
+        const cols = Math.floor(canvas.width / gridSize);
+        const rows = Math.floor((canvas.height - 50) / gridSize); // 留出顶部信息栏空间
+
+        // 游戏地图 (0=空地, 1=墙壁, 2=豆子, 3=大豆子)
+        const maze = [
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+            [1,2,2,2,2,2,2,2,2,1,1,2,2,2,2,2,2,2,2,1],
+            [1,3,1,1,1,2,1,1,1,1,1,1,1,1,2,1,1,1,3,1],
+            [1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1],
+            [1,2,1,1,1,2,1,2,1,1,1,1,2,1,2,1,1,1,2,1],
+            [1,2,2,2,2,2,1,2,2,1,1,2,2,1,2,2,2,2,2,1],
+            [1,1,1,1,1,2,1,1,2,1,1,2,1,1,2,1,1,1,1,1],
+            [0,0,0,0,1,2,1,2,2,2,2,2,2,1,2,1,0,0,0,0],
+            [1,1,1,1,1,2,1,2,1,0,0,1,2,1,2,1,1,1,1,1],
+            [2,2,2,2,2,2,2,2,1,0,0,1,2,2,2,2,2,2,2,2],
+            [1,1,1,1,1,2,1,2,1,0,0,1,2,1,2,1,1,1,1,1],
+            [0,0,0,0,1,2,1,2,2,2,2,2,2,1,2,1,0,0,0,0],
+            [1,1,1,1,1,2,1,1,2,1,1,2,1,1,2,1,1,1,1,1],
+            [1,2,2,2,2,2,2,2,2,1,1,2,2,2,2,2,2,2,2,1],
+            [1,2,1,1,1,2,1,1,1,1,1,1,1,1,2,1,1,1,2,1],
+            [1,3,2,1,1,2,2,2,2,2,2,2,2,2,2,1,1,2,3,1],
+            [1,1,2,1,1,2,1,2,1,1,1,1,2,1,2,1,1,2,1,1],
+            [1,2,2,2,2,2,1,2,2,1,1,2,2,1,2,2,2,2,2,1],
+            [1,2,1,1,1,1,1,1,2,1,1,2,1,1,1,1,1,1,2,1],
+            [1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1],
+            [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+        ];
+
+        // 吃豆人对象
+        const pacman = {
+            x: 9,
+            y: 15,
+            direction: 'right',
+            nextDirection: 'right',
+            mouthOpen: true,
+            mouthTimer: 0
+        };
+
+        // 幽灵对象
+        const ghosts = [
+            { x: 9, y: 9, direction: 'up', color: '#FF0000' },
+            { x: 10, y: 9, direction: 'down', color: '#FFB8FF' },
+            { x: 9, y: 10, direction: 'left', color: '#00FFFF' },
+            { x: 10, y: 10, direction: 'right', color: '#FFB852' }
+        ];
+
+        let totalDots = 0;
+        let dotsEaten = 0;
+
+        // 计算总豆子数
+        function countDots() {
+            let count = 0;
+            for (let row of maze) {
+                for (let cell of row) {
+                    if (cell === 2 || cell === 3) count++;
+                }
+            }
+            return count;
+        }
+
+        // 绘制迷宫
+        function drawMaze() {
+            for (let y = 0; y < maze.length; y++) {
+                for (let x = 0; x < maze[y].length; x++) {
+                    const cellX = x * gridSize;
+                    const cellY = y * gridSize + 50; // 偏移顶部信息栏
+                    
+                    switch (maze[y][x]) {
+                        case 1: // 墙壁
+                            ctx.fillStyle = '#0000FF';
+                            ctx.fillRect(cellX, cellY, gridSize, gridSize);
+                            ctx.strokeStyle = '#4444FF';
+                            ctx.strokeRect(cellX, cellY, gridSize, gridSize);
+                            break;
+                        case 2: // 小豆子
+                            ctx.fillStyle = '#FFFF00';
+                            ctx.beginPath();
+                            ctx.arc(cellX + gridSize/2, cellY + gridSize/2, 2, 0, Math.PI * 2);
+                            ctx.fill();
+                            break;
+                        case 3: // 大豆子
+                            ctx.fillStyle = '#FFFF00';
+                            ctx.beginPath();
+                            ctx.arc(cellX + gridSize/2, cellY + gridSize/2, 6, 0, Math.PI * 2);
+                            ctx.fill();
+                            break;
+                    }
+                }
+            }
+        }
+
+        // 绘制吃豆人
+        function drawPacman() {
+            const x = pacman.x * gridSize + gridSize/2;
+            const y = pacman.y * gridSize + gridSize/2 + 50;
+            
+            ctx.fillStyle = '#FFFF00';
+            ctx.beginPath();
+            
+            // 计算嘴巴角度
+            let startAngle, endAngle;
+            const mouthSize = pacman.mouthOpen ? 0.3 : 0.1;
+            
+            switch (pacman.direction) {
+                case 'right':
+                    startAngle = mouthSize * Math.PI;
+                    endAngle = (2 - mouthSize) * Math.PI;
+                    break;
+                case 'left':
+                    startAngle = (1 + mouthSize) * Math.PI;
+                    endAngle = (1 - mouthSize) * Math.PI;
+                    break;
+                case 'up':
+                    startAngle = (1.5 + mouthSize) * Math.PI;
+                    endAngle = (0.5 - mouthSize) * Math.PI;
+                    break;
+                case 'down':
+                    startAngle = (0.5 + mouthSize) * Math.PI;
+                    endAngle = (1.5 - mouthSize) * Math.PI;
+                    break;
+            }
+            
+            ctx.arc(x, y, gridSize/2 - 2, startAngle, endAngle);
+            ctx.lineTo(x, y);
+            ctx.fill();
+            
+            // 眼睛
+            ctx.fillStyle = '#000';
+            let eyeX = x, eyeY = y - 3;
+            switch (pacman.direction) {
+                case 'right': eyeX = x - 2; break;
+                case 'left': eyeX = x + 2; break;
+                case 'up': eyeY = y + 2; break;
+                case 'down': eyeY = y - 6; break;
+            }
+            ctx.beginPath();
+            ctx.arc(eyeX, eyeY, 2, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // 绘制幽灵
+        function drawGhosts() {
+            ghosts.forEach(ghost => {
+                const x = ghost.x * gridSize + gridSize/2;
+                const y = ghost.y * gridSize + gridSize/2 + 50;
+                
+                ctx.fillStyle = ghost.color;
+                
+                // 身体（半圆）
+                ctx.beginPath();
+                ctx.arc(x, y, gridSize/2 - 2, Math.PI, 0);
+                ctx.lineTo(x + gridSize/2 - 2, y + gridSize/2 - 2);
+                ctx.lineTo(x + gridSize/3, y + gridSize/3);
+                ctx.lineTo(x, y + gridSize/2 - 2);
+                ctx.lineTo(x - gridSize/3, y + gridSize/3);
+                ctx.lineTo(x - gridSize/2 + 2, y + gridSize/2 - 2);
+                ctx.closePath();
+                ctx.fill();
+                
+                // 眼睛
+                ctx.fillStyle = '#FFF';
+                ctx.beginPath();
+                ctx.arc(x - 4, y - 3, 3, 0, Math.PI * 2);
+                ctx.arc(x + 4, y - 3, 3, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.fillStyle = '#000';
+                ctx.beginPath();
+                ctx.arc(x - 4, y - 3, 1.5, 0, Math.PI * 2);
+                ctx.arc(x + 4, y - 3, 1.5, 0, Math.PI * 2);
+                ctx.fill();
+            });
+        }
+
+        // 检查位置是否可移动
+        function canMove(x, y) {
+            if (x < 0 || x >= cols || y < 0 || y >= rows) return false;
+            return maze[y][x] !== 1;
+        }
+
+        // 移动吃豆人
+        function movePacman() {
+            let newX = pacman.x;
+            let newY = pacman.y;
+            
+            // 尝试转向
+            switch (pacman.nextDirection) {
+                case 'up': newY--; break;
+                case 'down': newY++; break;
+                case 'left': newX--; break;
+                case 'right': newX++; break;
+            }
+            
+            if (canMove(newX, newY)) {
+                pacman.direction = pacman.nextDirection;
+                pacman.x = newX;
+                pacman.y = newY;
+            } else {
+                // 继续当前方向
+                newX = pacman.x;
+                newY = pacman.y;
+                switch (pacman.direction) {
+                    case 'up': newY--; break;
+                    case 'down': newY++; break;
+                    case 'left': newX--; break;
+                    case 'right': newX++; break;
+                }
+                
+                if (canMove(newX, newY)) {
+                    pacman.x = newX;
+                    pacman.y = newY;
+                }
+            }
+            
+            // 边界穿越（隧道效果）
+            if (pacman.x < 0) pacman.x = cols - 1;
+            if (pacman.x >= cols) pacman.x = 0;
+            
+            // 吃豆子
+            if (maze[pacman.y][pacman.x] === 2) {
+                maze[pacman.y][pacman.x] = 0;
+                score += 10;
+                dotsEaten++;
+            } else if (maze[pacman.y][pacman.x] === 3) {
+                maze[pacman.y][pacman.x] = 0;
+                score += 50;
+                dotsEaten++;
+            }
+            
+            // 更新嘴巴动画
+            pacman.mouthTimer++;
+            if (pacman.mouthTimer % 10 === 0) {
+                pacman.mouthOpen = !pacman.mouthOpen;
+            }
+        }
+
+        // 移动幽灵
+        function moveGhosts() {
+            ghosts.forEach(ghost => {
+                const directions = ['up', 'down', 'left', 'right'];
+                let newX = ghost.x;
+                let newY = ghost.y;
+                
+                // 随机改变方向
+                if (Math.random() < 0.1) {
+                    ghost.direction = directions[Math.floor(Math.random() * directions.length)];
+                }
+                
+                switch (ghost.direction) {
+                    case 'up': newY--; break;
+                    case 'down': newY++; break;
+                    case 'left': newX--; break;
+                    case 'right': newX++; break;
+                }
+                
+                if (canMove(newX, newY)) {
+                    ghost.x = newX;
+                    ghost.y = newY;
+                } else {
+                    // 选择新方向
+                    ghost.direction = directions[Math.floor(Math.random() * directions.length)];
+                }
+                
+                // 边界穿越
+                if (ghost.x < 0) ghost.x = cols - 1;
+                if (ghost.x >= cols) ghost.x = 0;
+            });
+        }
+
+        // 检查碰撞
+        function checkCollisions() {
+            for (let ghost of ghosts) {
+                if (ghost.x === pacman.x && ghost.y === pacman.y) {
+                    lives--;
+                    updateLivesDisplay();
+                    
+                    if (lives <= 0) {
+                        gameOver();
+                    } else {
+                        // 重置位置
+                        pacman.x = 9;
+                        pacman.y = 15;
+                        ghosts[0].x = 9; ghosts[0].y = 9;
+                        ghosts[1].x = 10; ghosts[1].y = 9;
+                        ghosts[2].x = 9; ghosts[2].y = 10;
+                        ghosts[3].x = 10; ghosts[3].y = 10;
+                    }
+                    break;
+                }
+            }
+        }
+
+        // 检查胜利条件
+        function checkWin() {
+            if (dotsEaten >= totalDots) {
+                gameOver(true);
+            }
+        }
+
+        // 更新生命显示
+        function updateLivesDisplay() {
+            let heartsText = '';
+            for (let i = 0; i < lives; i++) {
+                heartsText += '♥';
+            }
+            livesElement.textContent = `生命: ${heartsText}`;
+        }
+
+        // 开始游戏
+        function startGame() {
+            gameState = 'playing';
+            startScreen.style.display = 'none';
+            gameOverScreen.style.display = 'none';
+            
+            // 重置游戏状态
+            score = 0;
+            lives = 3;
+            dotsEaten = 0;
+            totalDots = countDots();
+            
+            // 重置吃豆人位置
+            pacman.x = 9;
+            pacman.y = 15;
+            pacman.direction = 'right';
+            pacman.nextDirection = 'right';
+            
+            // 重置幽灵位置
+            ghosts[0].x = 9; ghosts[0].y = 9;
+            ghosts[1].x = 10; ghosts[1].y = 9;
+            ghosts[2].x = 9; ghosts[2].y = 10;
+            ghosts[3].x = 10; ghosts[3].y = 10;
+            
+            updateLivesDisplay();
+            scoreElement.textContent = `得分: ${score}`;
+            
+            // 开始游戏循环
+            gameLoop = setInterval(update, 150);
+        }
+
+        // 游戏结束
+        function gameOver(won = false) {
+            gameState = 'gameOver';
+            clearInterval(gameLoop);
+            
+            if (won) {
+                finalScoreElement.textContent = `恭喜胜利！最终得分: ${score}`;
+            } else {
+                finalScoreElement.textContent = `最终得分: ${score}`;
+            }
+            
+            gameOverScreen.style.display = 'flex';
+        }
+
+        // 重新开始
+        function restartGame() {
+            // 重置迷宫
+            for (let y = 0; y < maze.length; y++) {
+                for (let x = 0; x < maze[y].length; x++) {
+                    if (maze[y][x] === 0) {
+                        // 重新放置豆子 (简化版本)
+                        if (Math.random() < 0.1) {
+                            maze[y][x] = Math.random() < 0.9 ? 2 : 3;
+                        }
+                    }
+                }
+            }
+            
+            startGame();
+        }
+
+        // 显示开始界面
+        function showStartScreen() {
+            gameState = 'start';
+            startScreen.style.display = 'flex';
+            gameOverScreen.style.display = 'none';
+        }
+
+        // 游戏主循环
+        function update() {
+            // 清空画布
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // 绘制迷宫
+            drawMaze();
+            
+            // 移动对象
+            movePacman();
+            moveGhosts();
+            
+            // 绘制对象
+            drawPacman();
+            drawGhosts();
+            
+            // 检查碰撞和胜利
+            checkCollisions();
+            checkWin();
+            
+            // 更新得分显示
+            scoreElement.textContent = `得分: ${score}`;
+        }
+
+        // 事件监听
+        document.addEventListener('keydown', (e) => {
+            if (gameState !== 'playing') return;
+            
+            switch (e.key.toLowerCase()) {
+                case 'arrowup':
+                case 'w':
+                    pacman.nextDirection = 'up';
+                    break;
+                case 'arrowdown':
+                case 's':
+                    pacman.nextDirection = 'down';
+                    break;
+                case 'arrowleft':
+                case 'a':
+                    pacman.nextDirection = 'left';
+                    break;
+                case 'arrowright':
+                case 'd':
+                    pacman.nextDirection = 'right';
+                    break;
+            }
+        });
+
+        // 初始化
+        totalDots = countDots();
+        drawMaze();
+        drawPacman();
+        drawGhosts();
+    </script>
+</body>
+</html>
