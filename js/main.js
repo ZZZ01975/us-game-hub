@@ -877,7 +877,16 @@ window.openGame = function(gameId) {
         historyManager.addToHistory(game);
     }
     
-    window.location.href = `game.html?id=${gameId}`;
+    // 新游戏使用独立HTML文件，旧游戏使用game.html
+    const newGames = ['flappy-bird', 'pac-man', 'space-invaders'];
+    
+    if (newGames.includes(gameId)) {
+        // 新游戏：直接跳转到独立的HTML文件
+        window.location.href = `games/${gameId}/index.html`;
+    } else {
+        // 旧游戏：使用原有的game.html框架
+        window.location.href = `game.html?id=${gameId}`;
+    }
 };
 
 // 处理分类查看全部按钮点击
