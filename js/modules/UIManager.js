@@ -191,7 +191,7 @@ class UIManager {
         const rating = this._createFeaturedRating(game.rating || 0);
         
         return `
-            <div class="featured-game-card" data-game-id="${game.id}" onclick="openGame(${game.id})">
+            <div class="featured-game-card" data-game-id="${game.id}" onclick="openGame('${game.id}')">
                 <div class="featured-game-image">
                     <img 
                         class="lazy-load" 
@@ -425,7 +425,7 @@ class UIManager {
         const rating = this._createSectionRating(game.rating || 0);
         
         return `
-            <div class="section-game-card" data-game-id="${game.id}" onclick="openGame(${game.id})">
+            <div class="section-game-card" data-game-id="${game.id}" onclick="openGame('${game.id}')">
                 <div class="section-game-image">
                     <img 
                         class="lazy-load" 
@@ -583,7 +583,7 @@ class UIManager {
         const previewGames = games.slice(0, 4);
         
         return previewGames.map(game => `
-            <div class="category-game-mini" onclick="openGame(${game.id}); event.stopPropagation();">
+            <div class="category-game-mini" onclick="openGame('${game.id}'); event.stopPropagation();">
                 <img 
                     class="lazy-load" 
                     data-src="${game.image}" 
@@ -674,7 +674,7 @@ class UIManager {
         const imageInfo = this._getOptimizedImageInfo(game.image, game.title);
 
         return `
-            <div class="game-card" data-game-id="${game.id}" onclick="openGame(${game.id})">
+            <div class="game-card" data-game-id="${game.id}" onclick="openGame('${game.id}')">
                 <div class="game-image-container">
                     <img 
                         class="game-image" 
@@ -986,7 +986,7 @@ class UIManager {
         const gamesHTML = games.map(game => {
             const rating = game.rating ? this._createRatingStars(game.rating) : '';
             return `
-                <div class="recommended-card" onclick="openGame(${game.id})" title="点击游玩 ${escapeHtml(game.title)}">
+                <div class="recommended-card" onclick="openGame('${game.id}')" title="点击游玩 ${escapeHtml(game.title)}">
                     <img 
                         src="${game.image}" 
                         alt="${escapeHtml(game.title)}" 
@@ -1375,7 +1375,7 @@ class UIManager {
             const resultsHTML = results.slice(0, 5).map(game => {
                 const title = highlightKeyword(game.title, query);
                 return `
-                    <div class="search-result-item" onclick="openGame(${game.id})">
+                    <div class="search-result-item" onclick="openGame('${game.id}')">
                         <img 
                             src="${game.image}" 
                             alt="${escapeHtml(game.title)}" 
@@ -1443,7 +1443,7 @@ class UIManager {
         const lastPlayed = historyItem.lastPlayedFormatted || '未知时间';
 
         return `
-            <div class="history-card" data-game-id="${historyItem.gameId}" onclick="openGame(${historyItem.gameId})">
+            <div class="history-card" data-game-id="${historyItem.gameId}" onclick="openGame('${historyItem.gameId}')">
                 <div class="history-image-container">
                     <img 
                         class="history-image lazy-load" 
@@ -1511,7 +1511,7 @@ class UIManager {
         
         const gamesHTML = recentGames.map(game => {
             return `
-                <div class="recent-game-card" onclick="openGame(${game.gameId})" title="继续游玩 ${escapeHtml(game.title)}">
+                <div class="recent-game-card" onclick="openGame('${game.gameId}')" title="继续游玩 ${escapeHtml(game.title)}">
                     <img 
                         src="${game.image}" 
                         alt="${escapeHtml(game.title)}" 
@@ -1586,7 +1586,7 @@ class UIManager {
         const rating = this._createRatingStars(game.rating || 0);
 
         return `
-            <div class="favorite-card" data-game-id="${game.id}" onclick="openGame(${game.id})">
+            <div class="favorite-card" data-game-id="${game.id}" onclick="openGame('${game.id}')">
                 <div class="favorite-image-container">
                     <img 
                         class="favorite-image lazy-load" 
@@ -1657,7 +1657,7 @@ class UIManager {
         
         const gamesHTML = favoriteGames.map(game => {
             return `
-                <div class="favorite-game-card" onclick="openGame(${game.id})" title="游玩收藏的游戏 ${escapeHtml(game.title)}">
+                <div class="favorite-game-card" onclick="openGame('${game.id}')" title="游玩收藏的游戏 ${escapeHtml(game.title)}">
                     <img 
                         src="${game.image}" 
                         alt="${escapeHtml(game.title)}" 
