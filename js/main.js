@@ -324,8 +324,8 @@ class App {
         const filteredGames = gameManager.filterByCategory(category);
         uiManager.renderGamesList(filteredGames);
         
-        // 滚动到游戏列表顶部
-        scrollToElement('.games-section', 80);
+        // 移除自动滚动 - 用户应该控制浏览位置
+        // 原来的自动滚动会让页面跳到底部，影响用户体验
     }
 
     /**
@@ -361,10 +361,8 @@ class App {
         // 同时更新主游戏列表
         uiManager.renderGamesList(searchResults, query);
         
-        // 如果有搜索结果，滚动到列表顶部
-        if (searchResults.length > 0) {
-            scrollToElement('.games-section', 80);
-        }
+        // 移除自动滚动 - 搜索时用户应该保持当前浏览位置
+        // 原来的自动滚动会影响用户搜索体验
     }
 
 
@@ -621,11 +619,8 @@ class App {
         // 显示游戏列表
         uiManager.renderGamesList(games);
         
-        // 滚动到游戏列表
-        const gamesSection = document.querySelector('.games-section');
-        if (gamesSection) {
-            gamesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+        // 移除自动滚动 - 用户应该控制浏览位置
+        // 原来的自动滚动会让页面跳到底部，影响用户体验
     }
 
     /**
@@ -913,11 +908,8 @@ window.handleCategoryViewAll = function(category, event) {
     const filteredGames = gameManager.filterByCategory(category);
     uiManager.renderGamesList(filteredGames);
     
-    // 滚动到游戏列表
-    const gamesSection = document.querySelector('.games-section');
-    if (gamesSection) {
-        gamesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    // 移除自动滚动 - 用户应该控制浏览位置
+    // 原来的自动滚动会让页面跳到底部，影响用户体验
 };
 
 // 从历史记录中移除游戏

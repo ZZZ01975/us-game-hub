@@ -84,11 +84,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // 更新页面标题
         updatePageTitle(category);
         
-        // 滚动到游戏区域
-        const gamesSection = document.querySelector('.games-section, .games-container');
-        if (gamesSection) {
-            gamesSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
+        // 移除自动滚动 - 用户应该控制浏览位置
     }
 
     /**

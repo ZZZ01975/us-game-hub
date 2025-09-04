@@ -1,54 +1,226 @@
 {
   "version": "1.1",
-  "lastUpdated": "2025-09-04T10:00:00Z",
+  "lastUpdated": "2025-09-04T19:45:00Z",
   "games": [
     {
       "id": "sprunki-incredibox",
       "title": {
         "en": "Sprunki Incredibox",
-        "zh": "Sprunki音乐盒"
+        "zh": "Sprunki音乐盒",
+        "es": "Sprunki Incredibox",
+        "fr": "Sprunki Incredibox"
       },
       "description": {
-        "en": "Create unique music by mixing sounds with colorful characters.",
-        "zh": "通过混合声音创作独特音乐的游戏。"
+        "en": "Create unique music by mixing sounds with colorful characters. This popular fan-made mod of Incredibox features both cute and horror themes for endless creativity.",
+        "zh": "通过混合声音与色彩角色创作独特音乐。这个受欢迎的Incredibox模组具有可爱和恐怖双重主题。",
+        "es": "Crea música única mezclando sonidos con personajes coloridos. Este popular mod presenta temas lindos y de horror.",
+        "fr": "Créez une musique unique en mixant des sons avec des personnages colorés."
       },
       "category": "casual",
+      "categoryName": {
+        "en": "Casual",
+        "zh": "休闲",
+        "es": "Casual", 
+        "fr": "Décontracté"
+      },
+      "coverImage": "https://via.placeholder.com/300x200/FF4081/white?text=Sprunki",
       "gameUrl": "https://www.gameflare.com/online-game/incredibox-sprunki/",
       "featured": true,
       "rating": 4.7,
-      "tags": ["featured", "hot", "trending"]
+      "playCount": 15240,
+      "tags": ["featured", "hot", "trending", "new"],
+      "addedDate": "2025-09-04T00:00:00Z",
+      "lastUpdated": "2025-09-04T00:00:00Z",
+      "status": "active",
+      "metadata": {
+        "developer": "Sprunki Community",
+        "version": "1.0",
+        "size": "3.2MB",
+        "controls": ["mouse", "touch"],
+        "difficulty": "easy",
+        "minAge": 6,
+        "maxPlayers": 1,
+        "estimatedPlayTime": "15-60 minutes",
+        "languages": ["en", "zh", "es", "fr"],
+        "platform": "web",
+        "technology": "HTML5"
+      }
     },
     {
       "id": "cookie-clicker",
       "title": {
         "en": "Cookie Clicker",
-        "zh": "饼干点击器"
+        "zh": "饼干点击器",
+        "es": "Cookie Clicker",
+        "fr": "Cookie Clicker"
       },
       "description": {
-        "en": "Click cookies to bake more cookies! Addictive idle game.",
-        "zh": "点击饼干制造更多饼干的放置游戏。"
+        "en": "Click cookies to bake more cookies! This addictive idle game lets you build a cookie empire with grandmas, factories, and cosmic upgrades.",
+        "zh": "点击饼干制造更多饼干！这个令人上瘾的放置游戏让你建立饼干帝国。",
+        "es": "¡Haz clic en galletas para hornear más! Construye un imperio de galletas con abuelas y fábricas.",
+        "fr": "Cliquez sur les cookies pour en cuire plus ! Construisez un empire de cookies."
       },
       "category": "casual",
+      "categoryName": {
+        "en": "Casual",
+        "zh": "休闲",
+        "es": "Casual",
+        "fr": "Décontracté"
+      },
+      "coverImage": "https://via.placeholder.com/300x200/8D6E63/white?text=Cookie+Clicker",
       "gameUrl": "https://orteil.dashnet.org/cookieclicker/",
       "featured": true,
       "rating": 4.6,
-      "tags": ["featured", "idle", "popular"]
+      "playCount": 22150,
+      "tags": ["featured", "idle", "popular"],
+      "addedDate": "2025-09-04T00:00:00Z",
+      "lastUpdated": "2025-09-04T00:00:00Z",
+      "status": "active",
+      "metadata": {
+        "developer": "Orteil",
+        "version": "2.052",
+        "size": "1.2MB", 
+        "controls": ["mouse", "touch"],
+        "difficulty": "easy",
+        "minAge": 6,
+        "maxPlayers": 1,
+        "estimatedPlayTime": "30-180 minutes",
+        "languages": ["en", "zh", "es", "fr"],
+        "platform": "web",
+        "technology": "HTML5"
+      }
     },
     {
       "id": "geometry-dash",
       "title": {
         "en": "Geometry Dash",
-        "zh": "几何冲刺"
+        "zh": "几何冲刺",
+        "es": "Geometry Dash",
+        "fr": "Geometry Dash"
       },
       "description": {
-        "en": "Jump and fly through dangerous passages in this rhythm-based platformer.",
-        "zh": "节奏平台跳跃游戏，通过危险通道。"
+        "en": "Jump and fly through dangerous passages in this rhythm-based platformer. Perfect timing is key to avoid spikes and obstacles in this addictive game.",
+        "zh": "在这个基于节奏的平台游戏中跳跃飞行通过危险通道。完美时机是避开障碍的关键。",
+        "es": "Salta y vuela a través de pasajes peligrosos en este juego de plataformas basado en ritmo.",
+        "fr": "Sautez et volez à travers des passages dangereux dans ce jeu de plates-formes rythmé."
       },
       "category": "action",
+      "categoryName": {
+        "en": "Action",
+        "zh": "动作",
+        "es": "Acción",
+        "fr": "Action"
+      },
+      "coverImage": "https://via.placeholder.com/300x200/00BCD4/white?text=Geometry+Dash",
       "gameUrl": "https://poki.com/en/g/geometry-dash-remastered",
       "featured": true,
       "rating": 4.3,
-      "tags": ["featured", "trending", "hard"]
+      "playCount": 12580,
+      "tags": ["featured", "trending", "hard"],
+      "addedDate": "2025-09-04T00:00:00Z",
+      "lastUpdated": "2025-09-04T00:00:00Z",
+      "status": "active",
+      "metadata": {
+        "developer": "RobTop Games",
+        "version": "2.1",
+        "size": "2.8MB",
+        "controls": ["keyboard", "mouse", "touch"],
+        "difficulty": "hard",
+        "minAge": 10,
+        "maxPlayers": 1,
+        "estimatedPlayTime": "5-30 minutes",
+        "languages": ["en", "zh", "es", "fr"],
+        "platform": "web",
+        "technology": "HTML5"
+      }
+    },
+    {
+      "id": "snake-battle",
+      "title": {
+        "en": "Snake Battle",
+        "zh": "贪吃蛇大作战",
+        "es": "Batalla de Serpientes",
+        "fr": "Bataille de Serpents"
+      },
+      "description": {
+        "en": "Classic snake game where you control a snake to eat food and grow longer while avoiding walls and yourself. Simple to play, tests your reflexes.",
+        "zh": "经典贪吃蛇游戏，控制小蛇吃食物长大，避免撞墙和自己。简单易上手，考验反应。",
+        "es": "Juego clásico de serpiente. Controla una serpiente para comer y crecer evitando paredes.",
+        "fr": "Jeu de serpent classique. Contrôlez un serpent pour manger et grandir."
+      },
+      "category": "arcade",
+      "categoryName": {
+        "en": "Arcade", 
+        "zh": "街机",
+        "es": "Arcade",
+        "fr": "Arcade"
+      },
+      "coverImage": "https://via.placeholder.com/300x200/4CAF50/white?text=Snake+Game",
+      "gameUrl": "games/snake/index.html",
+      "featured": true,
+      "rating": 4.5,
+      "playCount": 1250,
+      "tags": ["featured", "classic"],
+      "addedDate": "2024-01-15T00:00:00Z",
+      "lastUpdated": "2024-01-15T00:00:00Z", 
+      "status": "active",
+      "metadata": {
+        "developer": "US Game Hub",
+        "version": "1.2",
+        "size": "1.8MB",
+        "controls": ["keyboard", "touch"],
+        "difficulty": "easy",
+        "minAge": 3,
+        "maxPlayers": 1,
+        "estimatedPlayTime": "5-15 minutes",
+        "languages": ["en", "zh", "es", "fr"],
+        "platform": "web",
+        "technology": "HTML5"
+      }
+    },
+    {
+      "id": "tetris-classic",
+      "title": {
+        "en": "Tetris",
+        "zh": "俄罗斯方块", 
+        "es": "Tetris",
+        "fr": "Tetris"
+      },
+      "description": {
+        "en": "Classic Tetris game where you rotate and move falling blocks to clear complete lines. Timeless classic puzzle game.",
+        "zh": "经典俄罗斯方块游戏，旋转移动下落方块消除完整行。永恒的经典益智游戏。",
+        "es": "Juego clásico de Tetris donde rotas bloques para eliminar líneas completas.",
+        "fr": "Jeu Tetris classique où vous faites tourner des blocs pour effacer des lignes."
+      },
+      "category": "puzzle",
+      "categoryName": {
+        "en": "Puzzle",
+        "zh": "益智",
+        "es": "Rompecabezas", 
+        "fr": "Puzzle"
+      },
+      "coverImage": "https://via.placeholder.com/300x200/2196F3/white?text=Tetris",
+      "gameUrl": "games/tetris/index.html",
+      "featured": true,
+      "rating": 4.8,
+      "playCount": 2100,
+      "tags": ["featured", "hot", "classic"],
+      "addedDate": "2024-01-10T00:00:00Z",
+      "lastUpdated": "2024-01-10T00:00:00Z",
+      "status": "active",
+      "metadata": {
+        "developer": "US Game Hub", 
+        "version": "2.1",
+        "size": "2.3MB",
+        "controls": ["keyboard", "touch"],
+        "difficulty": "medium",
+        "minAge": 6,
+        "maxPlayers": 1,
+        "estimatedPlayTime": "10-30 minutes",
+        "languages": ["en", "zh", "es", "fr"],
+        "platform": "web",
+        "technology": "HTML5"
+      }
     }
   ]
 }
