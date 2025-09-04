@@ -1,17 +1,33 @@
-# US Game Hub
+# 🎮 US Game Hub
 
-一个现代化的小游戏平台网站，提供各种类型的在线小游戏。
+![HTML5 Games](https://img.shields.io/badge/HTML5-Games-orange)
+![Free to Play](https://img.shields.io/badge/Free-to%20Play-green)
+![Unblocked](https://img.shields.io/badge/School-Unblocked-blue)
 
-## 项目特性
+**Play trending games like Sprunki Incredibox, Cookie Clicker, Geometry Dash unblocked, 1v1.LOL and Fireboy Watergirl. Free online browser games for school and home.**
 
-- 🎮 **丰富的游戏库** - 包含动作、益智、休闲、街机等多种类型游戏
-- 🌍 **多语言支持** - 支持中文、英文、西班牙文、法文
-- 📱 **响应式设计** - 完美适配桌面、平板、手机设备
-- 🔍 **智能搜索** - 实时搜索游戏，支持关键词高亮
-- ⭐ **游戏收藏** - 收藏喜欢的游戏，方便下次游玩
-- 📊 **游戏统计** - 记录游戏游玩次数和历史
-- 🚀 **高性能** - 图片懒加载，优化的加载速度
-- 🎨 **现代UI** - 美观的界面设计，流畅的动画效果
+## 🕹️ Featured Games
+
+### 🔥 Trending Now
+- **Sprunki Incredibox** - Create unique music with colorful characters
+- **Cookie Clicker** - Build your cookie empire with addictive clicking  
+- **Geometry Dash** - Rhythm-based platformer challenge
+- **1v1.LOL** - Battle royale building game
+- **Fireboy and Watergirl** - Cooperative puzzle adventure
+
+### 🎯 Classic Games
+- **Snake** - Classic arcade snake game
+- **Tetris** - Timeless block puzzle  
+- **2048** - Number sliding puzzle
+- **Breakout** - Paddle ball brick breaker
+
+## 📱 Features
+
+- **100% Free** - No payments, no subscriptions
+- **Unblocked** - Works at school and office
+- **Mobile Friendly** - Play on any device  
+- **No Downloads** - Instant browser gameplay
+- **Multilingual** - English, Chinese, Spanish, French support
 
 ## 技术栈
 
